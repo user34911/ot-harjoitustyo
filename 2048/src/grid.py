@@ -71,6 +71,28 @@ class Grid:
             for tile in movable_tiles:
                 tile.rect.move_ip(0, -self.cell_size)
 
+    def move_left(self):
+        move_loop = True
+
+        while move_loop:
+            movable_tiles = self._get_movable_tiles(Direction.LEFT)
+            if len(movable_tiles) == 0:
+                move_loop = False
+
+            for tile in movable_tiles:
+                tile.rect.move_ip(-self.cell_size, 0)
+
+    def move_right(self):
+        move_loop = True
+
+        while move_loop:
+            movable_tiles = self._get_movable_tiles(Direction.RIGHT)
+            if len(movable_tiles) == 0:
+                move_loop = False
+
+            for tile in movable_tiles:
+                tile.rect.move_ip(self.cell_size, 0)
+
     def _get_movable_tiles(self, direction):
         move_test_value = 10
         movables = []
@@ -87,6 +109,18 @@ class Grid:
                 if self._collisions(tile):
                     movables.append(tile)
                 tile.rect.move_ip(0, move_test_value)
+
+            elif direction is Direction.LEFT:
+                tile.rect.move_ip(-move_test_value, 0)
+                if self._collisions(tile):
+                    movables.append(tile)
+                tile.rect.move_ip(move_test_value, 0)
+
+            elif direction is Direction.RIGHT:
+                tile.rect.move_ip(move_test_value, 0)
+                if self._collisions(tile):
+                    movables.append(tile)
+                tile.rect.move_ip(-move_test_value, 0)
 
         return movables
 

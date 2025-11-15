@@ -20,9 +20,9 @@ class GameLoop:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    pass
+                    self._grid.move_left()
                 if event.key == pygame.K_RIGHT:
-                    pass
+                    self._grid.move_right()
                 if event.key == pygame.K_UP:
                     self._grid.move_up()
                 if event.key == pygame.K_DOWN:
