@@ -3,6 +3,7 @@ import random
 from spirtes.cell import Cell
 from spirtes.tile import Tile
 from spirtes.border import Border
+from direction import Direction
 
 class Grid:
     def __init__(self, grid_size: int, cell_size: int, position: tuple):
@@ -44,3 +45,39 @@ class Grid:
             self.tiles.add(Tile(size=self.cell_size, x=cell.rect.x, y=cell.rect.y))
 
         self.all_sprites.add(self.tiles, self.cells, self.borders)
+
+    def update(self):
+        self.tiles.update()
+
+    def move_down(self):
+        move_loop = True
+
+        while move_loop:
+            movable_tiles = self._get_movable_tiles(Direction.DOWN)
+            if len(movable_tiles) == 0:
+                move_loop = False
+
+            for tile in movable_tiles:
+                tile.rect.move_ip(0, self.cell_size)
+
+    def _get_movable_tiles(self, direction):
+        move_test_value = 10
+        movables = []
+        for tile in self.tiles:
+            if direction is Direction.DOWN:
+                tile.rect.move_ip(0, move_test_value)
+                if self._collisions(tile):
+                    movables.append(tile)
+                tile.rect.move_ip(0, -move_test_value)
+
+        return movables
+
+    def _collisions(self, tile):
+        border_collisions = pygame.sprite.spritecollide(tile, self.borders, False)
+        # Make a text group which doesnt include the tile itself
+        test_tiles = pygame.sprite.Group([t for t in self.tiles if t != tile])
+        tile_collisions = pygame.sprite.spritecollide(tile, test_tiles, False)
+        if border_collisions or tile_collisions:
+            return False
+        return True
+
