@@ -1,5 +1,9 @@
 import pygame
 from grid import Grid
+from clock import Clock
+from event_queue import EventQueue
+from renderer import Renderer
+from game_loop import GameLoop
 
 def main():
     grid_size = 4
@@ -9,19 +13,13 @@ def main():
 
     grid = Grid(grid_size, cell_size, position)
 
+    event_queue = EventQueue()
+    renderer = Renderer(display, grid)
+    clock = Clock()
+    game_loop = GameLoop(grid, renderer, event_queue, clock)
+
     pygame.init()
-    grid.all_sprites.draw(display)
-
-    running = True
-
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        
-        pygame.display.update()
-
-    pygame.quit()
+    game_loop.start()
 
 if __name__ == "__main__":
     main()
