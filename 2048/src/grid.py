@@ -60,15 +60,33 @@ class Grid:
             for tile in movable_tiles:
                 tile.rect.move_ip(0, self.cell_size)
 
+    def move_up(self):
+        move_loop = True
+
+        while move_loop:
+            movable_tiles = self._get_movable_tiles(Direction.UP)
+            if len(movable_tiles) == 0:
+                move_loop = False
+
+            for tile in movable_tiles:
+                tile.rect.move_ip(0, -self.cell_size)
+
     def _get_movable_tiles(self, direction):
         move_test_value = 10
         movables = []
         for tile in self.tiles:
+
             if direction is Direction.DOWN:
                 tile.rect.move_ip(0, move_test_value)
                 if self._collisions(tile):
                     movables.append(tile)
                 tile.rect.move_ip(0, -move_test_value)
+
+            elif direction is Direction.UP:
+                tile.rect.move_ip(0, -move_test_value)
+                if self._collisions(tile):
+                    movables.append(tile)
+                tile.rect.move_ip(0, move_test_value)
 
         return movables
 
