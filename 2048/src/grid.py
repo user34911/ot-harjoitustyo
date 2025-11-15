@@ -4,8 +4,10 @@ from spirtes.cell import Cell
 from spirtes.tile import Tile
 
 class Grid:
-    def __init__(self, grid_size, cell_size):
+    def __init__(self, grid_size: int, cell_size: int, position: tuple):
         self.cell_size = cell_size
+        self.x = position[0]
+        self.y = position[1]
 
         self.tiles = pygame.sprite.Group()
         self.cells = pygame.sprite.Group()
@@ -18,10 +20,10 @@ class Grid:
         # Initialise playing grid tiles are on
         for y in range(grid_size):
             for x in range(grid_size):
-                normalised_x = x * self.cell_size
-                normalised_y = y * self.cell_size
+                normalised_x = x * self.cell_size + self.x
+                normalised_y = y * self.cell_size + self.y
                 self.cells.add(Cell(size=self.cell_size, x=normalised_x, y=normalised_y))
-        
+
         # Get 2 random cells and spawn a tile on them
         cells = random.choices(self.cells.sprites(), k=2)
         for cell in cells:
