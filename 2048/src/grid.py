@@ -8,6 +8,7 @@ from direction import Direction
 class Grid:
     def __init__(self, grid_size: int, cell_size: int, position: tuple):
         self.cell_size = cell_size
+        self.grid_size = grid_size
         self.x = position[0]
         self.y = position[1]
 
@@ -16,7 +17,7 @@ class Grid:
         self.borders = pygame.sprite.Group()
         self.all_sprites = pygame.sprite.Group()
 
-        self._initialise_grid(grid_size)
+        self._initialise_grid(self.grid_size)
 
     def _initialise_grid(self, grid_size):
         # Initialise playing grid tiles are on
@@ -28,8 +29,8 @@ class Grid:
 
         # Init help variables
         border_thickness = self.cell_size // 20
-        border_length = self.cell_size * grid_size + border_thickness
-        border_offset = self.cell_size * grid_size
+        border_length = self.cell_size * self.grid_size + border_thickness
+        border_offset = self.cell_size * self.grid_size
         # Top border
         self.borders.add(Border(width=border_length, height=border_thickness, x=self.x, y=self.y-border_thickness))
         # Bottom border
