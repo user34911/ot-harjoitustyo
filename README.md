@@ -3,9 +3,9 @@
 _Koko_ perheelle sopiva hassun hauska **2048** peli
 
 ## Dokumentaatio
-- [työaikakirjanpito](https://github.com/user34911/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
-- [vaatimusmaarittely](https://github.com/user34911/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
-- [changelog](https://github.com/user34911/ot-harjoitustyo/blob/main/dokumentaatio/changelog.md)
+- [työaikakirjanpito](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/tuntikirjanpito.md)
+- [vaatimusmaarittely](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/vaatimusmaarittely.md)
+- [changelog](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/changelog.md)
 
 ## Asennus
 1. Asenna ensin riippuvuudet komennolla
