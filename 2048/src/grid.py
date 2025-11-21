@@ -43,9 +43,6 @@ class Grid:
         # Get 2 random cells and spawn a tile on them
         self._spawn_tile()
         self._spawn_tile()
-        self._spawn_tile()
-        self._spawn_tile()
-        self._spawn_tile()
 
         self.all_sprites.add(self.tiles, self.cells, self.borders)
 
@@ -75,6 +72,7 @@ class Grid:
 
         self._update_cell_tiles()
         self._spawn_tile()
+        self._unlock_all_tiles()
 
     def move_up(self):
         move_loop = True
@@ -91,6 +89,7 @@ class Grid:
 
         self._update_cell_tiles()
         self._spawn_tile()
+        self._unlock_all_tiles()
 
     def move_left(self):
         move_loop = True
@@ -107,6 +106,7 @@ class Grid:
 
         self._update_cell_tiles()
         self._spawn_tile()
+        self._unlock_all_tiles()
 
     def move_right(self):
         move_loop = True
@@ -123,6 +123,7 @@ class Grid:
 
         self._update_cell_tiles()
         self._spawn_tile()
+        self._unlock_all_tiles()
 
     def _get_movable_tiles(self, direction):
         move_test_value = 10
@@ -167,6 +168,9 @@ class Grid:
                 if collided_tile.value != tile.value:
                     corrected_collisions.append(tile)
 
+                elif collided_tile.lock is True or tile.lock is True:
+                    corrected_collisions.append(tile)
+
             if len(corrected_collisions) < 1:
                 corrected_collisions = None
             tile_collisions = corrected_collisions
@@ -176,10 +180,12 @@ class Grid:
         return True
 
     def _combine_tiles(self, tile):
+        if tile.lock is True:
+            return
         test_tiles = pygame.sprite.Group([t for t in self.tiles if t != tile])
         tile_collisions = pygame.sprite.spritecollide(tile, test_tiles, True)
         if tile_collisions:
-            new_tile = Tile(size=self.cell_size, value=tile.value*2, x=tile.rect.x, y=tile.rect.y)
+            new_tile = Tile(size=self.cell_size, value=tile.value*2, x=tile.rect.x, y=tile.rect.y, lock=True)
             self.tiles.add(new_tile)
             self.all_sprites.add(new_tile)
             tile.kill()
@@ -191,3 +197,7 @@ class Grid:
                 cell.tile = True
             else:
                 cell.tile = False
+
+    def _unlock_all_tiles(self):
+        for tile in self.tiles:
+            tile.lock = False

@@ -7,7 +7,7 @@ TILE_COLOURS = {2: pygame.Color(255, 233, 196),
                 32: pygame.Color(207, 132, 58)}
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, size, value, x=0, y=0):
+    def __init__(self, size, value, x=0, y=0, lock=False):
         super().__init__()
 
         self.value = value
@@ -19,6 +19,8 @@ class Tile(pygame.sprite.Sprite):
 
         self.rect.x = x
         self.rect.y = y
+
+        self.lock = lock
     
     def _draw_image(self):
         try:
