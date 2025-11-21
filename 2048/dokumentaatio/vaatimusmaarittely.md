@@ -5,9 +5,9 @@ Sovellus on 2048 peli.
 
 ## Perusversion toiminnallisuus
 - 4x4 ruudukko, jossa peli toimii
-  - Jokaisella liikkeellä syntyy ruudukkoon uusi 2- tai 4-laatta
-  - Laatat liikkuvat syötettä vastaavaan reunaan
-  - Laatat yhdistyvät törmätessä toiseen samanarvoiseen
+  - Jokaisella liikkeellä syntyy ruudukkoon uusi 2- tai 4-laatta :heavy_check_mark:
+  - Laatat liikkuvat syötettä vastaavaan reunaan :heavy_check_mark:
+  - Laatat yhdistyvät törmätessä toiseen samanarvoiseen :heavy_check_mark:
   - Kun ruudukkoo täyttyy on peli ohi
 - Peli pitää kirjaa pisteistä
   - Pisteet lasketaan kaavalla laatta $2^n$ antaa $(n-1)2^n$ lisää pisteitä
