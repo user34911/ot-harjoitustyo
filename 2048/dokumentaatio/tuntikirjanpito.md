@@ -12,3 +12,5 @@
 | 18.11 | 2 | lattojen liikkumisen ja yhdistymisen koodaus |
 | 21.11 | 2 | laatat yhdistyvät ja liike luo uuden |
 | | 2 | lint ja koodin kommentointi |
+| 22.11 | 1 | testejen kirjottamista |
+| yht | 16 | |
