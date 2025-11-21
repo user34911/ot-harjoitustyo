@@ -7,6 +7,8 @@ class Renderer:
 
     def render(self):
         self._display.fill((0, 0, 0))
-        self._grid.all_sprites.draw(self._display)
+        self._grid.tiles.draw(self._display)
+        self._grid.cells.draw(self._display)
+        self._grid.borders.draw(self._display)
 
         pygame.display.update()
