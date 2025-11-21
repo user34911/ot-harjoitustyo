@@ -188,5 +188,6 @@ class Grid:
         for cell in self.cells:
             tile_on_cell = pygame.sprite.spritecollide(cell, self.tiles, False)
             if tile_on_cell:
-                return True
-            return False
+                cell.tile = True
+            else:
+                cell.tile = False

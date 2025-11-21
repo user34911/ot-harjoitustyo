@@ -21,5 +21,8 @@ class Tile(pygame.sprite.Sprite):
         self.rect.y = y
     
     def _draw_image(self):
-        colour = TILE_COLOURS[self.value]
+        try:
+            colour = TILE_COLOURS[self.value]
+        except KeyError:
+            colour = pygame.Color(137, 96, 204)
         self.image.fill(colour)
