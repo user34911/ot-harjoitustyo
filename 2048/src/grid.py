@@ -53,7 +53,7 @@ class Grid:
         value = random.choice([2, 2, 2, 4])
         spawn_cell = random.choice([cell for cell in self.cells.sprites() if not cell.tile])
         new_tile = Tile(size=self.cell_size, value=value, x=spawn_cell.rect.x, y=spawn_cell.rect.y)
-        spawn_cell.tile = new_tile
+        spawn_cell.tile = True
         self.tiles.add(new_tile)
         self.all_sprites.add(new_tile)
 
@@ -65,44 +65,64 @@ class Grid:
 
         while move_loop:
             movable_tiles = self._get_movable_tiles(Direction.DOWN)
+            movable_tiles = sorted(movable_tiles, key=lambda tile: tile.rect.y, reverse=True)
             if len(movable_tiles) == 0:
                 move_loop = False
 
             for tile in movable_tiles:
                 tile.rect.move_ip(0, self.cell_size)
+                self._combine_tiles(tile)
+
+        self._update_cell_tiles()
+        self._spawn_tile()
 
     def move_up(self):
         move_loop = True
 
         while move_loop:
             movable_tiles = self._get_movable_tiles(Direction.UP)
+            movable_tiles = sorted(movable_tiles, key=lambda tile: tile.rect.y)
             if len(movable_tiles) == 0:
                 move_loop = False
 
             for tile in movable_tiles:
                 tile.rect.move_ip(0, -self.cell_size)
+                self._combine_tiles(tile)
+
+        self._update_cell_tiles()
+        self._spawn_tile()
 
     def move_left(self):
         move_loop = True
 
         while move_loop:
             movable_tiles = self._get_movable_tiles(Direction.LEFT)
+            movable_tiles = sorted(movable_tiles, key=lambda tile: tile.rect.x)
             if len(movable_tiles) == 0:
                 move_loop = False
 
             for tile in movable_tiles:
                 tile.rect.move_ip(-self.cell_size, 0)
+                self._combine_tiles(tile)
+
+        self._update_cell_tiles()
+        self._spawn_tile()
 
     def move_right(self):
         move_loop = True
 
         while move_loop:
             movable_tiles = self._get_movable_tiles(Direction.RIGHT)
+            movable_tiles = sorted(movable_tiles, key=lambda tile: tile.rect.x, reverse=True)
             if len(movable_tiles) == 0:
                 move_loop = False
 
             for tile in movable_tiles:
                 tile.rect.move_ip(self.cell_size, 0)
+                self._combine_tiles(tile)
+
+        self._update_cell_tiles()
+        self._spawn_tile()
 
     def _get_movable_tiles(self, direction):
         move_test_value = 10
@@ -137,10 +157,36 @@ class Grid:
 
     def _collisions(self, tile):
         border_collisions = pygame.sprite.spritecollide(tile, self.borders, False)
-        # Make a text group which doesnt include the tile itself
+        # Make a test group which doesnt include the tile itself
         test_tiles = pygame.sprite.Group([t for t in self.tiles if t != tile])
+
         tile_collisions = pygame.sprite.spritecollide(tile, test_tiles, False)
+        if tile_collisions:
+            corrected_collisions = []
+            for collided_tile in tile_collisions:
+                if collided_tile.value != tile.value:
+                    corrected_collisions.append(tile)
+
+            if len(corrected_collisions) < 1:
+                corrected_collisions = None
+            tile_collisions = corrected_collisions
+
         if border_collisions or tile_collisions:
             return False
         return True
 
+    def _combine_tiles(self, tile):
+        test_tiles = pygame.sprite.Group([t for t in self.tiles if t != tile])
+        tile_collisions = pygame.sprite.spritecollide(tile, test_tiles, True)
+        if tile_collisions:
+            new_tile = Tile(size=self.cell_size, value=tile.value*2, x=tile.rect.x, y=tile.rect.y)
+            self.tiles.add(new_tile)
+            self.all_sprites.add(new_tile)
+            tile.kill()
+
+    def _update_cell_tiles(self):
+        for cell in self.cells:
+            tile_on_cell = pygame.sprite.spritecollide(cell, self.tiles, False)
+            if tile_on_cell:
+                return True
+            return False
