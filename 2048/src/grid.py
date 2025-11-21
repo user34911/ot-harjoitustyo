@@ -1,5 +1,5 @@
-import pygame
 import random
+import pygame
 from spirtes.cell import Cell
 from spirtes.tile import Tile
 from spirtes.border import Border
@@ -30,17 +30,17 @@ class Grid:
                 self.cells.add(Cell(size=self.cell_size, x=normalised_x, y=normalised_y))
 
         # Init help variables
-        border_thickness = self.cell_size // 20
-        border_length = self.cell_size * self.grid_size + border_thickness
-        border_offset = self.cell_size * self.grid_size
+        thickness = self.cell_size // 20
+        length = self.cell_size * self.grid_size + thickness
+        offset = self.cell_size * self.grid_size
         # Top border
-        self.borders.add(Border(width=border_length, height=border_thickness, x=self.x, y=self.y-border_thickness))
+        self.borders.add(Border(length, thickness, self.x, self.y-thickness))
         # Bottom border
-        self.borders.add(Border(width=border_length, height=border_thickness, x=self.x-border_thickness, y=self.y+border_offset))
+        self.borders.add(Border(length, thickness, self.x-thickness, self.y+offset))
         # Left border
-        self.borders.add(Border(width=border_thickness, height=border_length, x=self.x-border_thickness, y=self.y-border_thickness))
+        self.borders.add(Border(thickness, length, self.x-thickness, self.y-thickness))
         # Right border
-        self.borders.add(Border(width=border_thickness, height=border_length, x=self.x+border_offset, y=self.y))
+        self.borders.add(Border(thickness, length, self.x+offset, self.y))
 
         # Add 2 tiles to grid
         self._spawn_tile()
@@ -231,7 +231,9 @@ class Grid:
         tile_collisions = pygame.sprite.spritecollide(tile, test_tiles, True)
         if tile_collisions:
             # Make a new tile with double value of current tile
-            new_tile = Tile(size=self.cell_size, value=tile.value*2, x=tile.rect.x, y=tile.rect.y, lock=True)
+            new_tile = Tile(self.cell_size, tile.value*2, tile.rect.x, tile.rect.y)
+            # Lock new tile so it can't combine on the same move
+            new_tile.lock = True
             # Add new tile to sprite groups
             self.tiles.add(new_tile)
             self.all_sprites.add(new_tile)

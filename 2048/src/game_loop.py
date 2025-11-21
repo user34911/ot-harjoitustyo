@@ -6,7 +6,7 @@ class GameLoop:
         self._clock = clock
         self._event_queue = event_queue
         self._renderer = renderer
-    
+
     def start(self):
         while True:
             if self._handle_events() is False:
@@ -15,7 +15,7 @@ class GameLoop:
             self._grid.update()
             self._render()
             self._clock.tick(60)
-    
+
     def _handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -29,6 +29,7 @@ class GameLoop:
                     self._grid.move_down()
             elif event.type == pygame.QUIT:
                 return False
+        return None
 
     def _render(self):
         self._renderer.render()

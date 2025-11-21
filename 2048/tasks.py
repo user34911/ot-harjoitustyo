@@ -23,3 +23,8 @@ def coverage(ctx):
 def coverage_report(ctx):
     linux = os.name == "posix"
     ctx.run("coverage html", pty=linux)
+
+@task
+def lint(ctx):
+    linux = os.name == "posix"
+    ctx.run("pylint src", pty=linux)

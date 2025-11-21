@@ -10,7 +10,7 @@ class Cell(pygame.sprite.Sprite):
         self.image = pygame.Surface((size, size))
         self.image.fill(self.cell_colour)
         self.image.set_colorkey(self.cell_colour)
-        
+
         self.rect = self.image.get_rect()
         self.border_width = size // 20
         pygame.draw.rect(self.image, self.border_colour, self.rect, width=self.border_width)
