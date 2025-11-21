@@ -41,11 +41,21 @@ class Grid:
         self.borders.add(Border(width=border_thickness, height=border_length, x=self.x+border_offset, y=self.y))
 
         # Get 2 random cells and spawn a tile on them
-        cells = random.choices(self.cells.sprites(), k=2)
-        for cell in cells:
-            self.tiles.add(Tile(size=self.cell_size, x=cell.rect.x, y=cell.rect.y))
+        self._spawn_tile()
+        self._spawn_tile()
+        self._spawn_tile()
+        self._spawn_tile()
+        self._spawn_tile()
 
         self.all_sprites.add(self.tiles, self.cells, self.borders)
+
+    def _spawn_tile(self):
+        value = random.choice([2, 2, 2, 4])
+        spawn_cell = random.choice([cell for cell in self.cells.sprites() if not cell.tile])
+        new_tile = Tile(size=self.cell_size, value=value, x=spawn_cell.rect.x, y=spawn_cell.rect.y)
+        spawn_cell.tile = new_tile
+        self.tiles.add(new_tile)
+        self.all_sprites.add(new_tile)
 
     def update(self):
         self.tiles.update()
