@@ -6,3 +6,10 @@
 - Luotu GameLoop-luokka, joka vastaa pelin silmukasta
 - Luoto ruuduille, laatoille ja reunoille jokaiselle oma Sprite luokka, jotka vastaavat väristä ja sijainnista
 - Testattu, että Grid luokka luo oikean kokoisen ruudukoin ruudut oikeissa paikossa ja kaksi laattaa
+
+## Viikko 4
+- Liike jatkuu nyt niin kauan kunnes osuu toiseen laattaan tai ruudukon reunaan
+- Jokaisen liikkeen jälkeen syntyy nyt uusi laatta
+- Samanarvoisten laattojen törmätessä toisiinsa ne yhdistyvät
+  - Laatat voivat yhdistyä vain kerran liikeessä
+- Testejä liikeen toimimisesta ja spritejen konstruktiosta
