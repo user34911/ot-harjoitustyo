@@ -12,4 +12,5 @@
 - Jokaisen liikkeen jälkeen syntyy nyt uusi laatta
 - Samanarvoisten laattojen törmätessä toisiinsa ne yhdistyvät
   - Laatat voivat yhdistyä vain kerran liikeessä
+- Laatoissa näkyy niiden arvo
 - Testejä liikeen toimimisesta ja spritejen konstruktiosta
