@@ -65,6 +65,8 @@ class Grid:
         self.tiles.update()
 
     def move_down(self):
+        # Varibale to keep track of how many tiles were moved
+        counter = 0
         # Make a loop that moves tiles down for as long as there are movable tiles
         move_loop = True
         while move_loop:
@@ -79,14 +81,19 @@ class Grid:
             for tile in movable_tiles:
                 # Move the tile down one cell
                 tile.rect.move_ip(0, self.cell_size)
+                counter += 1
                 # Check if tile can combine
                 self._combine_tiles(tile)
 
         self._update_cell_tiles()
-        self._spawn_tile()
+        # Only spawn new tile if tiles were moved
+        if counter > 0:
+            self._spawn_tile()
         self._unlock_all_tiles()
 
     def move_up(self):
+        # Varibale to keep track of how many tiles were moved
+        counter = 0
         # Make a loop that moves tiles up for as long as there are movable tiles
         move_loop = True
         while move_loop:
@@ -101,14 +108,19 @@ class Grid:
             for tile in movable_tiles:
                 # Move the tile up one cell
                 tile.rect.move_ip(0, -self.cell_size)
+                counter += 1
                 # Check if tile can combine
                 self._combine_tiles(tile)
 
         self._update_cell_tiles()
-        self._spawn_tile()
+        # Only spawn new tile if tiles were moved
+        if counter > 0:
+            self._spawn_tile()
         self._unlock_all_tiles()
 
     def move_left(self):
+        # Varibale to keep track of how many tiles were moved
+        counter = 0
         # Make a loop that moves tiles left for as long as there are movable tiles
         move_loop = True
         while move_loop:
@@ -123,14 +135,19 @@ class Grid:
             for tile in movable_tiles:
                 # Move the tile left one cell
                 tile.rect.move_ip(-self.cell_size, 0)
+                counter += 1
                 # Check if tile can combine
                 self._combine_tiles(tile)
 
         self._update_cell_tiles()
-        self._spawn_tile()
+        # Only spawn new tile if tiles were moved
+        if counter > 0:
+            self._spawn_tile()
         self._unlock_all_tiles()
 
     def move_right(self):
+        # Varibale to keep track of how many tiles were moved
+        counter = 0
         # Make a loop that moves tiles right for as long as there are movable tiles
         move_loop = True
         while move_loop:
@@ -145,11 +162,14 @@ class Grid:
             for tile in movable_tiles:
                 # Move the tile right one cell
                 tile.rect.move_ip(self.cell_size, 0)
+                counter += 1
                 # Check if tile can combine
                 self._combine_tiles(tile)
 
         self._update_cell_tiles()
-        self._spawn_tile()
+        # Only spawn new tile if tiles were moved
+        if counter > 0:
+            self._spawn_tile()
         self._unlock_all_tiles()
 
     def _get_movable_tiles(self, direction):
