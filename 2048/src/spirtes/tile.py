@@ -11,14 +11,15 @@ class Tile(pygame.sprite.Sprite):
         super().__init__()
 
         self.value = value
+        self.font = self._get_font(size)
 
         self.image = pygame.Surface((size, size))
-        self._draw_image()
 
         self.rect = self.image.get_rect()
-
         self.rect.x = x
         self.rect.y = y
+
+        self._draw_image()
 
         self.lock = False
 
@@ -28,3 +29,14 @@ class Tile(pygame.sprite.Sprite):
         except KeyError:
             colour = pygame.Color(137, 96, 204)
         self.image.fill(colour)
+
+        text = self.font.render(str(self.value), True, (0, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (self.rect.width//2, self.rect.height//2)
+        self.image.blit(text, text_rect)
+
+    def _get_font(self, size):
+        pygame.font.init()
+        font = pygame.font.SysFont("Arial", size // 3)
+        font.bold = True
+        return font
