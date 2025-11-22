@@ -27,6 +27,14 @@ class GameLoop:
                     self._grid.move_up()
                 if event.key == pygame.K_DOWN:
                     self._grid.move_down()
+                if event.key == pygame.K_w:
+                    self._grid.move_up()
+                if event.key == pygame.K_a:
+                    self._grid.move_left()
+                if event.key == pygame.K_d:
+                    self._grid.move_right()
+                if event.key == pygame.K_s:
+                    self._grid.move_down()
             elif event.type == pygame.QUIT:
                 return False
         return None
