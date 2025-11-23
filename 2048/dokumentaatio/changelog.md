@@ -13,4 +13,5 @@
 - Samanarvoisten laattojen törmätessä toisiinsa ne yhdistyvät
   - Laatat voivat yhdistyä vain kerran liikeessä
 - Laatoissa näkyy niiden arvo
+- Peli pitää kirjaa pisteistä
 - Testejä liikeen toimimisesta ja spritejen konstruktiosta
