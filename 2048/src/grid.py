@@ -4,6 +4,7 @@ from spirtes.cell import Cell
 from spirtes.tile import Tile
 from spirtes.border import Border
 from direction import Direction
+from score import Score
 
 class Grid:
     def __init__(self, grid_size: int, cell_size: int, position: tuple):
@@ -11,6 +12,7 @@ class Grid:
         self.grid_size = grid_size
         self.x = position[0]
         self.y = position[1]
+        self.score = Score()
 
         self.tiles = pygame.sprite.Group()
         self.cells = pygame.sprite.Group()
@@ -252,6 +254,7 @@ class Grid:
         if tile_collisions:
             # Make a new tile with double value of current tile
             new_tile = Tile(self.cell_size, tile.value*2, tile.rect.x, tile.rect.y)
+            self.score.add_score(tile.value*2)
             # Lock new tile so it can't combine on the same move
             new_tile.lock = True
             # Add new tile to sprite groups
