@@ -13,5 +13,5 @@
 | 21.11 | 2 | laatat yhdistyvät ja liike luo uuden |
 | | 2 | lint ja koodin kommentointi |
 | 22.11 | 1 | testejen kirjottamista |
-| 23.11 | 1 | koodin kirjoittamsita |
-| yht | 17 | |
+| 23.11 | 2 | koodin kirjoittamsita |
+| yht | 18 | |
