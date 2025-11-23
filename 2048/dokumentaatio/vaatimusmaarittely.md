@@ -9,7 +9,7 @@ Sovellus on 2048 peli.
   - Laatat liikkuvat syötettä vastaavaan reunaan :heavy_check_mark:
   - Laatat yhdistyvät törmätessä toiseen samanarvoiseen :heavy_check_mark:
   - Kun ruudukkoo täyttyy on peli ohi
-- Peli pitää kirjaa pisteistä
+- Peli pitää kirjaa pisteistä :heavy_check_mark:
   - Pisteet lasketaan kaavalla laatta $2^n$ antaa $(n-1)2^n$ lisää pisteitä
 - Pelissä on tulostaulukko
   - Käyttäjä voi asettaa kirjautumatta nimimerkin, jolla tuloksia tallenetaan
