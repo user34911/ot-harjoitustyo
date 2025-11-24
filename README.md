@@ -6,6 +6,7 @@ _Koko_ perheelle sopiva hassun hauska **2048** peli
 - [työaikakirjanpito](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/tuntikirjanpito.md)
 - [vaatimusmaarittely](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/vaatimusmaarittely.md)
 - [changelog](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/changelog.md)
+- [arkkitehtuuri](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/arkkitehtuuri.md)
 
 ## Asennus
 1. Siirry enshin hakemistoon 2048
