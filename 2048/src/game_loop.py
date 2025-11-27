@@ -20,22 +20,15 @@ class GameLoop:
     def _handle_events(self):
         for event in self._event_queue.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key in (pygame.K_LEFT, pygame.K_a):
                     self._grid.move_left()
-                if event.key == pygame.K_RIGHT:
+                if event.key in (pygame.K_RIGHT, pygame.K_d):
                     self._grid.move_right()
-                if event.key == pygame.K_UP:
+                if event.key in (pygame.K_UP, pygame.K_w):
                     self._grid.move_up()
-                if event.key == pygame.K_DOWN:
+                if event.key in (pygame.K_DOWN, pygame.K_s):
                     self._grid.move_down()
-                if event.key == pygame.K_w:
-                    self._grid.move_up()
-                if event.key == pygame.K_a:
-                    self._grid.move_left()
-                if event.key == pygame.K_d:
-                    self._grid.move_right()
-                if event.key == pygame.K_s:
-                    self._grid.move_down()
+
             elif event.type == pygame.QUIT:
                 return False
         return None

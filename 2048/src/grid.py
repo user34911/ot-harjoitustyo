@@ -280,3 +280,4 @@ class Grid:
     def _get_game_state(self):
         if len([cell for cell in self.cells.sprites() if not cell.tile]) == 0:
             return Status.OVER
+        return None
