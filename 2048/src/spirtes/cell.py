@@ -5,7 +5,7 @@ class Cell(pygame.sprite.Sprite):
         super().__init__()
 
         self.cell_colour = pygame.Color(255, 243, 209)
-        self.border_colour = pygame.Color(138, 138, 138)
+        self.border_colour = pygame.Color(128, 100, 73)
 
         self.image = pygame.Surface((size, size))
         self.image.fill(self.cell_colour)

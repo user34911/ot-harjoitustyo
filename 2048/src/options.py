@@ -3,4 +3,4 @@ class Options:
         self.resolution = (600, 600)
         self.grid_size = 4
         self.cell_size = 100
-        self.position = (50, 50)
+        self.position = (100, 100)

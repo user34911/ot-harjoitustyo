@@ -10,7 +10,7 @@ class Renderer:
         self._font.bold = True
 
     def render(self):
-        self._display.fill((0, 0, 0))
+        self._display.fill((214, 189, 159))
         self._grid.tiles.draw(self._display)
         self._grid.cells.draw(self._display)
         self._grid.borders.draw(self._display)

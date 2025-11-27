@@ -14,4 +14,6 @@
 | | 2 | lint ja koodin kommentointi |
 | 22.11 | 1 | testejen kirjottamista |
 | 23.11 | 2 | koodin kirjoittamsita |
-| yht | 18 | |
+| 26.11 | 2 | Käyttöliittuman laatimista |
+| 27.11 | 2 | Käyttöliittuman laatimista |
+| yht | 22 | |

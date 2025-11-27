@@ -5,6 +5,7 @@ from spirtes.tile import Tile
 from spirtes.border import Border
 from direction import Direction
 from score import Score
+from status import Status
 
 class Grid:
     def __init__(self, grid_size: int, cell_size: int, position: tuple):
@@ -275,3 +276,7 @@ class Grid:
     def _unlock_all_tiles(self):
         for tile in self.tiles:
             tile.lock = False
+
+    def _get_game_state(self):
+        if len([cell for cell in self.cells.sprites() if not cell.tile]) == 0:
+            return Status.OVER
