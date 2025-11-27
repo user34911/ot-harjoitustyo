@@ -1,25 +1,46 @@
 import pygame
+import pygame_gui
 from grid import Grid
 from clock import Clock
 from event_queue import EventQueue
 from renderer import Renderer
 from game_loop import GameLoop
+from ui.menu_loop import MenuLoop
+from ui.menu import Menu
+from ui.menu_renderer import MenuRenderer
+from options import Options
+from status import Status
+
 
 def main():
-    grid_size = 4
-    cell_size = 100
-    position = (50, 50)
-    display = pygame.display.set_mode((800, 600))
+    options = Options()
+    display = pygame.display.set_mode(options.resolution)
+    pygame.display.set_caption("2048")
 
-    grid = Grid(grid_size, cell_size, position)
-
+    grid = Grid(options.grid_size, options.cell_size, options.position)
     event_queue = EventQueue()
     renderer = Renderer(display, grid)
     clock = Clock()
+
     game_loop = GameLoop(grid, renderer, event_queue, clock)
 
+    menu = Menu(options.resolution)
+    manager = pygame_gui.UIManager(options.resolution)
+    menu_renderer = MenuRenderer(display, menu)
+    menu_loop = MenuLoop(menu, menu_renderer, manager)
+
+    status = Status.MENU
+
     pygame.init()
-    game_loop.start()
+    while True:
+        if status is Status.MENU:
+            status = menu_loop.start()
+
+        if status is Status.GAME:
+            status = game_loop.start()
+
+        if status is Status.EXIT:
+            break
 
 if __name__ == "__main__":
     main()

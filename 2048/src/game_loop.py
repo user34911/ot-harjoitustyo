@@ -1,4 +1,5 @@
 import pygame
+from status import Status
 
 class GameLoop:
     def __init__(self, grid, renderer, event_queue, clock):
@@ -10,7 +11,7 @@ class GameLoop:
     def start(self):
         while True:
             if self._handle_events() is False:
-                break
+                return Status.EXIT
 
             self._grid.update()
             self._render()
