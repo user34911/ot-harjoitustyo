@@ -33,6 +33,8 @@ class MenuLoop:
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self._menu.start_button:
                     return Status.GAME
+                if event.ui_element == self._menu.exit_button:
+                    return Status.EXIT
 
         return None
 
