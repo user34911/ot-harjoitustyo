@@ -277,7 +277,8 @@ class Grid:
         for tile in self.tiles:
             tile.lock = False
 
-    def _get_game_state(self):
+    def get_game_state(self):
+        # Make a list of empty cells and if none return that game is over
         if len([cell for cell in self.cells.sprites() if not cell.tile]) == 0:
             return Status.OVER
         return None

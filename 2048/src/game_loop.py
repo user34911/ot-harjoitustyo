@@ -1,6 +1,6 @@
 import pygame
 from status import Status
-
+from leaderboard.leaderboard import add_score_to_lb
 class GameLoop:
     def __init__(self, grid, renderer, event_queue, clock):
         self._grid = grid
@@ -12,6 +12,12 @@ class GameLoop:
         while True:
             if self._handle_events() is False:
                 return Status.EXIT
+
+            if self._grid.get_game_state() is Status.OVER:
+                player = "guest"
+                score = self._grid.score.get_score()
+                add_score_to_lb(player, score)
+                return Status.MENU
 
             self._grid.update()
             self._render()
