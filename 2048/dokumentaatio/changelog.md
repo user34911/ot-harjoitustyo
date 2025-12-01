@@ -15,3 +15,8 @@
 - Laatoissa näkyy niiden arvo
 - Peli pitää kirjaa pisteistä
 - Testejä liikeen toimimisesta ja spritejen konstruktiosta
+
+## Viikko 5
+- Paranneltu ulkonäköä
+- Lisätty Main Menu, jossa aloitus-, tulostaulukko- ja positumisnappi
+- Pelissä on tulostaulukko, joka kirjaa automaattisesti tulokset
