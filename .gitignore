@@ -2,5 +2,6 @@ __pycache__
 .pytest_cache
 .coverage
 htmlcov
+.venv
 main_window.py
 test.py
