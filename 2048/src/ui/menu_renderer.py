@@ -4,6 +4,7 @@ class MenuRenderer:
     def __init__(self, display, menu):
         self._display = display
         self._menu = menu
+        pygame.font.init()
 
     def render(self, manager):
         # Draw background

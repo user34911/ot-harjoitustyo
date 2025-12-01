@@ -16,16 +16,10 @@ def main():
     options = Options()
     display = pygame.display.set_mode(options.resolution)
     pygame.display.set_caption("2048")
-
-    grid = Grid(options.grid_size, options.cell_size, options.position)
-    event_queue = EventQueue()
-    renderer = Renderer(display, grid)
-    clock = Clock()
-
-    game_loop = GameLoop(grid, renderer, event_queue, clock)
+    pygame.font.init()
 
     menu = Menu(options.resolution)
-    manager = pygame_gui.UIManager(options.resolution)
+    manager = pygame_gui.UIManager(options.resolution, r"src\ui\theme.json")
     menu_renderer = MenuRenderer(display, menu)
     menu_loop = MenuLoop(menu, menu_renderer, manager)
 
@@ -37,6 +31,12 @@ def main():
             status = menu_loop.start()
 
         if status is Status.GAME:
+            grid = Grid(options.grid_size, options.cell_size, options.position)
+            event_queue = EventQueue()
+            renderer = Renderer(display, grid)
+            clock = Clock()
+            game_loop = GameLoop(grid, renderer, event_queue, clock)
+
             status = game_loop.start()
 
         if status is Status.EXIT:
