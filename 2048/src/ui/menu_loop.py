@@ -8,6 +8,7 @@ class MenuLoop:
         self._clock = pygame.time.Clock()
         self._renderer = renderer
         self.manager = manager
+        self.manager.get_theme().load_theme(r"src\ui\theme.json")
 
         self._menu.recreate_menu(self.manager)
 
@@ -35,6 +36,13 @@ class MenuLoop:
                     return Status.GAME
                 if event.ui_element == self._menu.exit_button:
                     return Status.EXIT
+                if event.ui_element == self._menu.leaderboard_button:
+                    self._menu.make_leaderboard(self.manager)
+                    self._menu.leaderboard_container.show()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self._menu.leaderboard_container.hide()
 
         return None
 
