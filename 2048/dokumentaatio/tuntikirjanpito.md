@@ -16,4 +16,5 @@
 | 23.11 | 2 | koodin kirjoittamsita |
 | 26.11 | 2 | Käyttöliittymän laatimista |
 | 27.11 | 2 | Käyttöliittymän laatimista |
-| yht | 22 | |
+| 1.12 | 4 | Tulostaulukon lisääminen | 
+| yht | 26 | |
