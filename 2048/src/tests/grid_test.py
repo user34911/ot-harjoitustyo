@@ -1,6 +1,7 @@
 import unittest
 from grid import Grid
 from spirtes.tile import Tile
+from status import Status
 
 class TestGrid(unittest.TestCase):
     def setUp(self):
@@ -52,3 +53,57 @@ class TestGrid(unittest.TestCase):
         self.grid.move_right()
         tile = self.grid.tiles.sprites()[0]
         self.assertEqual((tile.rect.x, tile.rect.y), (300, 0))
+
+    def test_grid_spawns_tile_if_tiles_moved(self):
+        self.grid.tiles.empty()
+        self.grid.tiles.add(Tile(self.cell_size, 2, 0, 0))
+        self.assertAlmostEqual(len(self.grid.tiles), 1)
+        self.grid.move_down()
+        self.assertAlmostEqual(len(self.grid.tiles), 2)
+
+    def test_grid_doesnt_spawn_tiles_if_none_moved(self):
+        self.grid.tiles.empty()
+        self.grid.tiles.add(Tile(self.cell_size, 2, 0, 0))
+        self.assertAlmostEqual(len(self.grid.tiles), 1)
+        self.grid.move_up()
+        self.assertAlmostEqual(len(self.grid.tiles), 1)
+
+    def test_two_same_value_tiles_combine(self):
+        self.grid.tiles.empty()
+        self.grid.tiles.add(Tile(self.cell_size, 2, 0, 0))
+        self.grid.tiles.add(Tile(self.cell_size, 2, 200, 0))
+        self.grid.move_left()
+        self.assertAlmostEqual(len(self.grid.tiles), 2)
+        self.assertEqual(self.grid.tiles.sprites()[0].value, 4)
+
+    def test_two_different_value_tiles_collide(self):
+        self.grid.tiles.empty()
+        self.grid.tiles.add(Tile(self.cell_size, 2, 0, 0))
+        self.grid.tiles.add(Tile(self.cell_size, 4, 200, 0))
+        self.grid.move_left()
+        tile = self.grid.tiles.sprites()[1]
+        self.assertEqual((tile.rect.x, tile.rect.y), (100, 0))
+
+    def test_two_same_value_tiles_dont_combine_if_locked(self):
+        self.grid.tiles.empty()
+        self.grid.tiles.add(Tile(self.cell_size, 2, 0, 0))
+        self.grid.tiles.add(Tile(self.cell_size, 2, 200, 0))
+        tile = self.grid.tiles.sprites()[1]
+        tile.lock = True
+        self.grid.move_left()
+        self.assertEqual((tile.rect.x, tile.rect.y), (100, 0))
+
+    def test_game_status_none_if_not_over(self):
+        self.assertIsNone(self.grid.get_game_state())
+
+    def test_game_status_over_if_over(self):
+        self.grid.tiles.empty()
+        i = 0
+        for y in range(self.grid_size):
+            for x in range(self.grid_size):
+                normalised_x = x * self.cell_size + self.x
+                normalised_y = y * self.cell_size + self.y
+                self.grid.tiles.add(Tile(size=self.cell_size, value=i, x=normalised_x, y=normalised_y))
+                self.grid.cells.sprites()[i].tile = True
+                i += 1
+        self.assertIs(self.grid.get_game_state(), Status.OVER)
