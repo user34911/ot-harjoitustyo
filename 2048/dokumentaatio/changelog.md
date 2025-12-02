@@ -20,3 +20,4 @@
 - Paranneltu ulkonäköä
 - Lisätty Main Menu, jossa aloitus-, tulostaulukko- ja positumisnappi
 - Pelissä on tulostaulukko, joka kirjaa automaattisesti tulokset
+- Lisätty testejä laattojen yhdistymiseen ja lisäämiseen littyen
