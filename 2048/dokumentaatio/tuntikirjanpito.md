@@ -18,4 +18,5 @@
 | 27.11 | 2 | Käyttöliittymän laatimista |
 | 1.12 | 4 | Tulostaulukon lisääminen | 
 | 2.12 | 1 | Testien kirjoittamista | 
-| yht | 27 | |
+| | 1 | Sekvenssikaavio ja release | 
+| yht | 28 | |
