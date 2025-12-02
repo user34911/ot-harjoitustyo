@@ -8,6 +8,9 @@ _Koko_ perheelle sopiva hassun hauska **2048** peli
 - [changelog](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/changelog.md)
 - [arkkitehtuuri](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/arkkitehtuuri.md)
 
+## Release
+[viikko 5 release](https://github.com/user34911/ot-harjoitustyo/releases/tag/viikko5)
+
 ## Asennus
 1. Siirry enshin hakemistoon 2048
 2. Asenna sitten riippuvuudet komennolla
