@@ -40,4 +40,4 @@ class GameLoop:
         return None
 
     def _render(self):
-        self._renderer.render()
+        self._renderer.render_grid()

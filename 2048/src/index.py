@@ -7,7 +7,6 @@ from renderer import Renderer
 from game_loop import GameLoop
 from ui.menu_loop import MenuLoop
 from ui.menu import Menu
-from ui.menu_renderer import MenuRenderer
 from options import Options
 from status import Status
 
@@ -18,10 +17,12 @@ def main():
     pygame.display.set_caption("2048")
     pygame.font.init()
 
+    renderer = Renderer(display)
+
     menu = Menu(options.resolution)
     manager = pygame_gui.UIManager(options.resolution, r"src\ui\theme.json")
-    menu_renderer = MenuRenderer(display, menu)
-    menu_loop = MenuLoop(menu, menu_renderer, manager)
+    renderer.set_menu(menu)
+    menu_loop = MenuLoop(menu, renderer, manager)
 
     status = Status.MENU
 
@@ -33,7 +34,7 @@ def main():
         if status is Status.GAME:
             grid = Grid(options.grid_size, options.cell_size, options.position)
             event_queue = EventQueue()
-            renderer = Renderer(display, grid)
+            renderer.set_grid(grid)
             clock = Clock()
             game_loop = GameLoop(grid, renderer, event_queue, clock)
 
