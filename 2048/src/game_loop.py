@@ -10,8 +10,11 @@ class GameLoop:
 
     def start(self):
         while True:
-            if self._handle_events() is False:
+            status = self._handle_events()
+            if status is False:
                 return Status.EXIT
+            elif status is Status.MENU:
+                return status
 
             if self._grid.get_game_state() is Status.OVER:
                 player = "guest"
@@ -34,6 +37,9 @@ class GameLoop:
                     self._grid.move_up()
                 if event.key in (pygame.K_DOWN, pygame.K_s):
                     self._grid.move_down()
+
+                if event.key == pygame.K_ESCAPE:
+                    return Status.MENU
 
             elif event.type == pygame.QUIT:
                 return False
