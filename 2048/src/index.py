@@ -18,6 +18,8 @@ def main():
     pygame.font.init()
 
     renderer = Renderer(display)
+    clock = Clock()
+    event_queue = EventQueue()
 
     menu = Menu(options.resolution)
     manager = pygame_gui.UIManager(options.resolution, r"src\ui\theme.json")
@@ -33,9 +35,7 @@ def main():
 
         if status is Status.GAME:
             grid = Grid(options.grid_size, options.cell_size, options.position)
-            event_queue = EventQueue()
             renderer.set_grid(grid)
-            clock = Clock()
             game_loop = GameLoop(grid, renderer, event_queue, clock)
 
             status = game_loop.start()
