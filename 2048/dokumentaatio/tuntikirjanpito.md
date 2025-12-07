@@ -19,4 +19,5 @@
 | 1.12 | 4 | Tulostaulukon lisääminen | 
 | 2.12 | 1 | Testien kirjoittamista | 
 | | 1 | Sekvenssikaavio ja release | 
-| yht | 28 | |
+| 7.12 | 2 | Refaktorointi ja peli ohi näyttö |
+| yht | 30 | |
