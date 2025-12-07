@@ -3,11 +3,11 @@ import pygame_gui
 from status import Status
 
 class MenuLoop:
-    def __init__(self, menu, renderer, manager):
+    def __init__(self, menu, renderer):
         self._menu = menu
         self._clock = pygame.time.Clock()
         self._renderer = renderer
-        self.manager = manager
+        self.manager = pygame_gui.UIManager(self._menu.window_size, r"src\ui\theme.json")
 
         self._menu.recreate_menu(self.manager)
 

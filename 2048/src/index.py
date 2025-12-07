@@ -1,5 +1,4 @@
 import pygame
-import pygame_gui
 from grid import Grid
 from clock import Clock
 from event_queue import EventQueue
@@ -22,9 +21,8 @@ def main():
     event_queue = EventQueue()
 
     menu = Menu(options.resolution)
-    manager = pygame_gui.UIManager(options.resolution, r"src\ui\theme.json")
     renderer.set_menu(menu)
-    menu_loop = MenuLoop(menu, renderer, manager)
+    menu_loop = MenuLoop(menu, renderer)
 
     status = Status.MENU
 
