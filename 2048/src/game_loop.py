@@ -16,14 +16,24 @@ class GameLoop:
             elif status is Status.MENU:
                 return status
 
+            self._grid.update()
+            self._render()
+            self._clock.tick(60)
+
             if self._grid.get_game_state() is Status.OVER:
                 player = "guest"
                 score = self._grid.score.get_score()
                 add_score_to_lb(player, score)
-                return Status.MENU
+                return self.game_over()
 
-            self._grid.update()
-            self._render()
+    def game_over(self):
+        self._renderer.render_game_over()
+        while True:
+            status = self._handle_events()
+            if status is False:
+                return Status.EXIT
+            if status is Status.MENU:
+                return status
             self._clock.tick(60)
 
     def _handle_events(self):

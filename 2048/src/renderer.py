@@ -32,6 +32,15 @@ class Renderer:
         text_rect.y = self._grid.y + (self._grid.cell_size * self._grid.grid_size) + 10
         self._display.blit(text, text_rect)
 
+    def render_game_over(self):
+        font = pygame.font.SysFont("Arial", 100)
+        text = font.render("GAME OVER", True, (255, 255, 255))
+        text_rect = text.get_rect()
+        text_rect.x = self._display.width // 2 - text_rect.width // 2
+        text_rect.y = -10
+        self._display.blit(text, text_rect)
+        pygame.display.update()
+
     def render_menu(self, manager):
         self._display.blit(self._menu.background_surface, (0, 0))
         manager.draw_ui(self._display)
