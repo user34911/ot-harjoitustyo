@@ -1,8 +1,7 @@
 import pygame
 import pygame_gui
-from pygame_gui.elements import UIButton
-from pygame_gui.elements import UITextBox
-from pygame_gui.elements import UIScrollingContainer
+from pygame_gui.elements import UIButton, UIDropDownMenu, UILabel
+from pygame_gui.elements import UIScrollingContainer, UIPanel
 from leaderboard.leaderboard import get_leaderboard
 
 class Menu:
@@ -15,6 +14,7 @@ class Menu:
         self.leaderboard_button = None
         self.leaderboard_container = None
         self.leaderboard_panel = None
+        self.start_options_container = None
     
     def recreate_menu(self, manager):
         manager.set_window_resolution(self.window_size)
@@ -95,3 +95,47 @@ class Menu:
                 text=f"{content[i][1]}",
                 manager=manager,
                 container=self.leaderboard_container)
+
+    def start_options(self, manager):
+        self.start_options_container = UIPanel(pygame.Rect(50, 50, self.window_size[0] - 100, self.window_size[1] - 100),
+                                               manager=manager,
+                                               visible=True)
+        
+        self.timed_mode_checkbox = pygame_gui.elements.UICheckBox(
+            relative_rect=pygame.Rect(50, 50, 30, 30),
+            text="Timed mode",
+            manager=manager,
+            container=self.start_options_container
+        )
+
+        button_rect = pygame.Rect(0, 0, 175, 75)
+        button_rect.bottomleft = (40, -20)
+        self.start_game_button = UIButton(button_rect,
+                                          "Start",
+                                          manager,
+                                          self.start_options_container,
+                                          anchors={"left": "left",
+                                                   "bottom": "bottom"})
+
+        button_rect.bottomright = (-40, -20)
+        self.back_button = UIButton(button_rect,
+                                    "Back",
+                                    manager,
+                                    self.start_options_container,
+                                    anchors={"right": "right",
+                                            "bottom": "bottom"})
+
+        UILabel(relative_rect=pygame.Rect(50, 110, 120, 30),
+                                  text="Grid Size:",
+                                  manager=manager,
+                                  container=self.start_options_container,
+                                  object_id="#start_option_label")
+
+        options = ["4x4"]
+        self.grid_size_dropdown = UIDropDownMenu(options_list=options,
+                                                 starting_option="4x4",
+                                                 relative_rect=pygame.Rect(190, 110, 70, 30),
+                                                 manager=manager,
+                                                 container=self.start_options_container)
+
+        self.start_options_container.hide()

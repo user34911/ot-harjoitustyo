@@ -10,8 +10,10 @@ class MenuLoop:
         self.manager = pygame_gui.UIManager(self._menu.window_size, r"src\ui\theme.json")
 
         self._menu.recreate_menu(self.manager)
+        self._menu.start_options(self.manager)
 
     def start(self):
+        self._menu.start_options_container.hide()
         while True:
             status = self._handle_events()
             if status is Status.EXIT:
@@ -32,7 +34,11 @@ class MenuLoop:
 
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self._menu.start_button:
+                    self._menu.start_options_container.show()
+                if event.ui_element == self._menu.start_game_button:
                     return Status.GAME
+                if event.ui_element == self._menu.back_button:
+                    self._menu.start_options_container.hide()
                 if event.ui_element == self._menu.exit_button:
                     return Status.EXIT
                 if event.ui_element == self._menu.leaderboard_button:
@@ -41,7 +47,10 @@ class MenuLoop:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self._menu.leaderboard_container.hide()
+                    try:
+                        self._menu.leaderboard_container.hide()
+                    except AttributeError:
+                        pass
 
         return None
 
