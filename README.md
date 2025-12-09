@@ -7,6 +7,7 @@ _Koko_ perheelle sopiva hassun hauska **2048** peli
 - [vaatimusmaarittely](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/vaatimusmaarittely.md)
 - [changelog](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/changelog.md)
 - [arkkitehtuuri](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/arkkitehtuuri.md)
+- [käyttöohje](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/kayttoohje.md)
 
 ## Release
 [viikko 5 release](https://github.com/user34911/ot-harjoitustyo/releases/tag/viikko5)
