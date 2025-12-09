@@ -32,6 +32,14 @@ class MenuLoop:
             if event.type == pygame.QUIT:
                 return Status.EXIT
 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    try:
+                        self._menu.start_options_container.hide()
+                        self._menu.leaderboard_container.hide()
+                    except AttributeError:
+                        pass
+
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self._menu.start_button:
                     self._menu.start_options_container.show()
@@ -44,13 +52,6 @@ class MenuLoop:
                 if event.ui_element == self._menu.leaderboard_button:
                     self._menu.make_leaderboard(self.manager)
                     self._menu.leaderboard_container.show()
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    try:
-                        self._menu.leaderboard_container.hide()
-                    except AttributeError:
-                        pass
 
         return None
 
