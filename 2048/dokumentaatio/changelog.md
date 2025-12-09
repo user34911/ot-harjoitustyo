@@ -21,3 +21,8 @@
 - Lisätty Main Menu, jossa aloitus-, tulostaulukko- ja positumisnappi
 - Pelissä on tulostaulukko, joka kirjaa automaattisesti tulokset
 - Lisätty testejä laattojen yhdistymiseen ja lisäämiseen littyen
+
+## Viikko 6
+- Peli ei enään heitä suoraan päävalikkoon kun peli ohi
+- Liästty ikkuna pelin aloitusasetusten valinnalle
+- Lisätty ajastettu pelimuoto

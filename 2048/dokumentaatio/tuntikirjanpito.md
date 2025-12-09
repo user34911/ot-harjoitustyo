@@ -20,4 +20,5 @@
 | 2.12 | 1 | Testien kirjoittamista | 
 | | 1 | Sekvenssikaavio ja release | 
 | 7.12 | 2 | Refaktorointi ja peli ohi näyttö |
-| yht | 30 | |
+| 9.12 | 2 | Ajastettu pelimuoto |
+| yht | 32 | |
