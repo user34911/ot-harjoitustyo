@@ -1,4 +1,17 @@
 # Arkkitehtuurikuvaus
+## Rakenne
+Ohjelman koodi on jaettu hakemistoihin, missä _sprites_ hakemistossa on _Sprite_ oliot, _ui_ hakemistossa käyttöliittymään liittyvä koodi, _leaderboard_ hakemistossa tulostaulukko, ja sen kanssa interaktivoivat funktiot ja muu koodi on päähakemistossa.
+
+## Käyttöliittymä
+Käyttöliittymä sisältää kaksi päänäkymää ja usean alinäkymän:
+- Peliruudukko
+  - Peli ohi näkymä
+- Päävalikko
+  - Tulostaulukko
+  - Pelin aloitusasetukset
+
+Kummatkin päänäkymistä ovat oma luokkansa ja vastaavasti alinäkymät sisältyvät päänäkymän luokkaan. Molemmilla näkymillä on oma silmukkansa joiden välillä pääsilmukka vaihtelee vaihdellen näkymää.
+
 ## Sovelluslogiikka
 Sovellus rakentuu pääsilmukasta, joka hallinoi suoritetaanko peli-, vai päävalikkosilmukkaa
 ```mermaid
@@ -18,6 +31,21 @@ classDiagram
     Grid "1" -- "1" Score
     Grid "1" -- "4" Borders
   ```
+
+## Tietojen pysyväistallennus
+Sovellus tallentaa tulostaulukon pysyvästi paikallisesti CSV-tiedostoon. Tietojen tallentamisesta vastaa `leaderboard.py` tiedoston funktio `add_score_to_lb` ja noutamisesta `get_leaderboard`.
+
+### Tiedostot
+Sovellus tallentaa pelien tulokset tiedostoon `leaderboard.csv`.
+Tiedostossa tulokset ovat muodossa
+```
+guest,2303
+teemu,21380
+jare,9572
+```
+Eli `{käyttäjänimi},{tulos}`
+
+
 ## Päätoiminnallisuudet
 ### Laattojen liikuttaminen
 Kun näppäimstöllä painaa jotakin liikkumisnappia suorittaa sovellus seuraavasti pienin eroin suunnasta riippuen:
