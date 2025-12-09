@@ -7,7 +7,16 @@ TILE_COLOURS = {2: pygame.Color(255, 233, 196),
                 32: pygame.Color(207, 132, 58)}
 
 class Tile(pygame.sprite.Sprite):
+    """Class that handles the tiles"""
     def __init__(self, size, value, x=0, y=0):
+        """Constructor that generates a tile
+
+        Args:
+            size (int): size of tile in pixels
+            value (int): value of tile used when combining
+            x (int, optional): x position of tile. Defaults to 0.
+            y (int, optional): y position of tile. Defaults to 0.
+        """
         super().__init__()
 
         self.value = value
@@ -24,6 +33,7 @@ class Tile(pygame.sprite.Sprite):
         self.lock = False
 
     def _draw_image(self):
+        """Function that draws the tile on scren"""
         try:
             colour = TILE_COLOURS[self.value]
         except KeyError:
@@ -36,6 +46,14 @@ class Tile(pygame.sprite.Sprite):
         self.image.blit(text, text_rect)
 
     def _get_font(self, size):
+        """Function to get the font tile value is typed with
+
+        Args:
+            size (int): size of the tile which is used to determine a fontsize fitting inside tile
+
+        Returns:
+            font: the desired font
+        """
         pygame.font.init()
         font = pygame.font.SysFont("Arial", size // 3)
         font.bold = True

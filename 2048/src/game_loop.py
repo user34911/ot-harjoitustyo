@@ -1,19 +1,34 @@
 import pygame
 from status import Status
 from leaderboard.leaderboard import add_score_to_lb
+
 class GameLoop:
+    """Class that handles the game loop"""
     def __init__(self, grid, renderer, event_queue, clock):
+        """Constructor
+
+        Args:
+            grid (Grid): the grid object that handles game logic
+            renderer (Renderer): responsible for drawing the game on screen
+            event_queue (EventQueue): module that checks user inputs
+            clock (Clock): module to update screen in set intervals
+        """
         self._grid = grid
         self._clock = clock
         self._event_queue = event_queue
         self._renderer = renderer
 
     def start(self):
+        """Function to start the game loop
+
+        Returns:
+            Status: which state the game should go to next
+        """
         while True:
             status = self._handle_events()
             if status is False:
                 return Status.EXIT
-            elif status is Status.MENU:
+            if status is Status.MENU:
                 return status
 
             self._grid.update()
@@ -32,6 +47,12 @@ class GameLoop:
                 return self.game_over()
 
     def game_over(self):
+        """Stops the game from being played showing the user the final alignmnet
+            of tiles and their score / time
+
+        Returns:
+            Status: which state the game should go to next
+        """
         self._renderer.render_game_over()
         while True:
             status = self._handle_events()
@@ -42,6 +63,11 @@ class GameLoop:
             self._clock.tick(60)
 
     def _handle_events(self):
+        """Checks user inputs and makes game perform actions accordingly
+
+        Returns:
+            Status: which status should the game go to next or None if game continues
+        """
         for event in self._event_queue.get():
             if event.type == pygame.KEYDOWN:
                 if event.key in (pygame.K_LEFT, pygame.K_a):

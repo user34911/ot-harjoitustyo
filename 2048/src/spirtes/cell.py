@@ -1,7 +1,15 @@
 import pygame
 
 class Cell(pygame.sprite.Sprite):
+    """Class that handles information about cells of playing grid"""
     def __init__(self, size=50, x=0, y=0):
+        """Constructor that generates a cell
+
+        Args:
+            size (int, optional): size of cell in pixels. Defaults to 50.
+            x (int, optional): x position of cell. Defaults to 0.
+            y (int, optional): y position of cell. Defaults to 0.
+        """
         super().__init__()
 
         self.cell_colour = pygame.Color(255, 243, 209)
