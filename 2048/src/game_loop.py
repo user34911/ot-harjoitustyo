@@ -20,10 +20,15 @@ class GameLoop:
             self._render()
             self._clock.tick(60)
 
-            if self._grid.get_game_state() is Status.OVER:
+            game_state = self._grid.get_game_state()
+
+            if game_state is Status.OVER:
                 player = "guest"
                 score = self._grid.score.get_score()
                 add_score_to_lb(player, score)
+                return self.game_over()
+
+            if game_state is Status.TIMED_OVER:
                 return self.game_over()
 
     def game_over(self):

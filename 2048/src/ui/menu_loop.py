@@ -16,10 +16,8 @@ class MenuLoop:
         self._menu.start_options_container.hide()
         while True:
             status = self._handle_events()
-            if status is Status.EXIT:
-                return Status.EXIT
-            if status is Status.GAME:
-                return Status.GAME
+            if status is not None:
+                return status
 
             time_delta = self._clock.tick(60) / 1000.0
             self.manager.update(time_delta)
@@ -44,6 +42,8 @@ class MenuLoop:
                 if event.ui_element == self._menu.start_button:
                     self._menu.start_options_container.show()
                 if event.ui_element == self._menu.start_game_button:
+                    if self._menu.timed_mode_checkbox.is_checked:
+                        return Status.TIMED_GAME
                     return Status.GAME
                 if event.ui_element == self._menu.back_button:
                     self._menu.start_options_container.hide()

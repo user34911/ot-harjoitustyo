@@ -8,12 +8,13 @@ from score import Score
 from status import Status
 
 class Grid:
-    def __init__(self, grid_size: int, cell_size: int, position: tuple):
+    def __init__(self, grid_size: int, cell_size: int, position: tuple, timed = False):
         self.cell_size = cell_size
         self.grid_size = grid_size
         self.x = position[0]
         self.y = position[1]
         self.score = Score()
+        self.timed = timed
 
         self.tiles = pygame.sprite.Group()
         self.cells = pygame.sprite.Group()
@@ -279,6 +280,14 @@ class Grid:
 
     def get_game_state(self):
         # Make a list of empty cells and if none return that game is over
+        if self.timed and self._tile_on_grid(64):
+            return Status.TIMED_OVER
         if len([cell for cell in self.cells.sprites() if not cell.tile]) == 0:
             return Status.OVER
         return None
+
+    def _tile_on_grid(self, value):
+        for tile in self.tiles:
+            if tile.value == value:
+                return True
+        return False
