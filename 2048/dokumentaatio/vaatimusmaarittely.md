@@ -4,7 +4,7 @@
 Sovellus on 2048 peli.
 
 ## Perusversion toiminnallisuus
-- 4x4 ruudukko, jossa peli toimii
+- 4x4 ruudukko, jossa peli toimii :heavy_check_mark:
   - Jokaisella liikkeellä syntyy ruudukkoon uusi 2- tai 4-laatta :heavy_check_mark:
   - Laatat liikkuvat syötettä vastaavaan reunaan :heavy_check_mark:
   - Laatat yhdistyvät törmätessä toiseen samanarvoiseen :heavy_check_mark:
@@ -17,7 +17,7 @@ Sovellus on 2048 peli.
   - Peli tallentaa tuloksen tulostaulukkoon automaattisesti :heavy_check_mark:
 
 ## Jatkokehitys (jos aikaa niin)
-- Ajastettu pelimuoto, jossa tavoite saadaa 2048 mahdollisimman nopeasti
+- Ajastettu pelimuoto, jossa tavoite saadaa 2048 mahdollisimman nopeasti :heavy_check_mark:
 - Itse valittava ruudukon koko
 - "Undo" toiminallisuus, joka kumoaa edellisen siirron
 - "Katkaisuhoito" toiminallisuus, joka poistaa ruudukosta pienet laata
