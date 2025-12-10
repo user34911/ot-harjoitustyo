@@ -72,133 +72,82 @@ class Grid:
         """Updates tiles"""
         self.tiles.update()
 
-    def move_down(self):
-        """Function that moves all the tiles down on the grid and spawns a new tile
-        if any were moved"""
-        counter = 0
-        move_loop = True
-        while move_loop:
-            movable_tiles = self._get_movable_tiles(Direction.DOWN)
-            # Sort tiles to check BOTTOM row first to make sure tiles move and combine correctly
-            movable_tiles = sorted(movable_tiles, key=lambda tile: tile.rect.y, reverse=True)
-            if len(movable_tiles) == 0:
-                move_loop = False
-
-            for tile in movable_tiles:
-                tile.rect.move_ip(0, self.cell_size)
-                counter += 1
-                self._combine_tiles(tile)
-
-        self._update_cell_tiles()
-        if counter > 0:
-            self._spawn_tile()
-        self._unlock_all_tiles()
-
-    def move_up(self):
-        """Function that moves all the tiles up on the grid and spawns a new tile
-        if any were moved"""
-        counter = 0
-        move_loop = True
-        while move_loop:
-            movable_tiles = self._get_movable_tiles(Direction.UP)
-            # Sort tiles to check TOP row first to make sure tiles move and combine correctly
-            movable_tiles = sorted(movable_tiles, key=lambda tile: tile.rect.y)
-            if len(movable_tiles) == 0:
-                move_loop = False
-
-            for tile in movable_tiles:
-                tile.rect.move_ip(0, -self.cell_size)
-                counter += 1
-                self._combine_tiles(tile)
-
-        self._update_cell_tiles()
-        if counter > 0:
-            self._spawn_tile()
-        self._unlock_all_tiles()
-
-    def move_left(self):
-        """Function that moves all the tiles left on the grid and spawns a new tile
-        if any were moved"""
-        counter = 0
-        move_loop = True
-        while move_loop:
-            movable_tiles = self._get_movable_tiles(Direction.LEFT)
-            # Sort tiles to check LEFT column first to make sure tiles move and combine correctly
-            movable_tiles = sorted(movable_tiles, key=lambda tile: tile.rect.x)
-            if len(movable_tiles) == 0:
-                move_loop = False
-
-            for tile in movable_tiles:
-                tile.rect.move_ip(-self.cell_size, 0)
-                counter += 1
-                self._combine_tiles(tile)
-
-        self._update_cell_tiles()
-        if counter > 0:
-            self._spawn_tile()
-        self._unlock_all_tiles()
-
-    def move_right(self):
-        """Function that moves all the tiles right on the grid and spawns a new tile
-        if any were moved"""
-        counter = 0
-        move_loop = True
-        while move_loop:
-            movable_tiles = self._get_movable_tiles(Direction.RIGHT)
-            # Sort tiles to check RIGHT column first to make sure tiles move and combine correctly
-            movable_tiles = sorted(movable_tiles, key=lambda tile: tile.rect.x, reverse=True)
-            if len(movable_tiles) == 0:
-                move_loop = False
-
-            for tile in movable_tiles:
-                tile.rect.move_ip(self.cell_size, 0)
-                counter += 1
-                self._combine_tiles(tile)
-
-        self._update_cell_tiles()
-        if counter > 0:
-            self._spawn_tile()
-        self._unlock_all_tiles()
-
-    def _get_movable_tiles(self, direction):
-        """Get all the tiles that can move in specified direction
+    def move(self, direction: Direction):
+        """Function that moves tiles in desired direction
 
         Args:
-            direction (Direction): direction which the ability to move to is checked
+            direction (Direction): which direction to move tiles
+        """
+        counter = 0
+        while True:
+            movable_tiles = self._get_movable_tiles(direction)
+            movable_tiles = self._sort_movable_tiles(movable_tiles, direction)
+            if len(movable_tiles) == 0:
+                break
+
+            for tile in movable_tiles:
+                self._move_tile(tile, direction, self.cell_size)
+                self._combine_tiles(tile)
+                counter += 1
+
+        self._update_cell_tiles()
+        if counter > 0:
+            self._spawn_tile()
+        self._unlock_all_tiles()
+
+    def _move_tile(self, tile, direction, amount: int):
+        if direction is Direction.DOWN:
+            tile.rect.move_ip(0, amount)
+        if direction is Direction.UP:
+            tile.rect.move_ip(0, -amount)
+        if direction is Direction.LEFT:
+            tile.rect.move_ip(-amount, 0)
+        if direction is Direction.RIGHT:
+            tile.rect.move_ip(amount, 0)
+
+    def _get_movable_tiles(self, direction: Direction):
+        """Function that gets all tiles that are movable in specified direction
+
+        Args:
+            direction (Direction): Direction to check
 
         Returns:
-            list: list of tiles that can be moved to specified direction
+            list: every movable tile
         """
-        move_test_value = 10
+
+        opposite = {Direction.DOWN: Direction.UP,
+                     Direction.UP: Direction.DOWN,
+                     Direction.LEFT: Direction.RIGHT,
+                     Direction.RIGHT: Direction.LEFT}
+
+        test_move_value = 10
         movables = []
 
         for tile in self.tiles:
-
-            if direction is Direction.DOWN:
-                tile.rect.move_ip(0, move_test_value)
-                if not self._collisions(tile):
-                    movables.append(tile)
-                tile.rect.move_ip(0, -move_test_value)
-
-            elif direction is Direction.UP:
-                tile.rect.move_ip(0, -move_test_value)
-                if not self._collisions(tile):
-                    movables.append(tile)
-                tile.rect.move_ip(0, move_test_value)
-
-            elif direction is Direction.LEFT:
-                tile.rect.move_ip(-move_test_value, 0)
-                if not self._collisions(tile):
-                    movables.append(tile)
-                tile.rect.move_ip(move_test_value, 0)
-
-            elif direction is Direction.RIGHT:
-                tile.rect.move_ip(move_test_value, 0)
-                if not self._collisions(tile):
-                    movables.append(tile)
-                tile.rect.move_ip(-move_test_value, 0)
+            self._move_tile(tile, direction, test_move_value)
+            if not self._collisions(tile):
+                movables.append(tile)
+            self._move_tile(tile, opposite[direction], test_move_value)
 
         return movables
+
+    def _sort_movable_tiles(self, tiles: list, direction: Direction):
+        """Sorts movable tiles so game can move them in the right order
+
+        Args:
+            tiles (list): list of tiles to be sorted
+            direction (Direction): what direction are tiles sorted by
+
+        Returns:
+            list: sorted list
+        """
+        if direction is Direction.DOWN:
+            return sorted(tiles, key=lambda tile: tile.rect.y, reverse=True)
+        if direction is Direction.UP:
+            return sorted(tiles, key=lambda tile: tile.rect.y)
+        if direction is Direction.LEFT:
+            return sorted(tiles, key=lambda tile: tile.rect.x)
+        return sorted(tiles, key=lambda tile: tile.rect.x, reverse=True)
 
     def _collisions(self, tile):
         """Check if tile collides with other tiles or borders, the function ignores

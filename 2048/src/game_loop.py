@@ -1,5 +1,5 @@
 import pygame
-from enums import Status
+from enums import Status, Direction
 from leaderboard.leaderboard_repository import add_score_to_lb
 from options import Options
 
@@ -69,13 +69,13 @@ class GameLoop:
         for event in self._event_queue.get():
             if event.type == pygame.KEYDOWN:
                 if event.key in (pygame.K_LEFT, pygame.K_a):
-                    self._grid.move_left()
+                    self._grid.move(Direction.LEFT)
                 if event.key in (pygame.K_RIGHT, pygame.K_d):
-                    self._grid.move_right()
+                    self._grid.move(Direction.RIGHT)
                 if event.key in (pygame.K_UP, pygame.K_w):
-                    self._grid.move_up()
+                    self._grid.move(Direction.UP)
                 if event.key in (pygame.K_DOWN, pygame.K_s):
-                    self._grid.move_down()
+                    self._grid.move(Direction.DOWN)
 
                 if event.key == pygame.K_ESCAPE:
                     return self._options.set_state(Status.MENU)
