@@ -1,10 +1,11 @@
 import pygame
-from status import Status
-from leaderboard.leaderboard import add_score_to_lb
+from enums import Status
+from leaderboard.leaderboard_repository import add_score_to_lb
+from options import Options
 
 class GameLoop:
     """Class that handles the game loop"""
-    def __init__(self, grid, renderer, event_queue, clock):
+    def __init__(self, grid, renderer, options: Options, event_queue, clock):
         """Constructor
 
         Args:
@@ -17,6 +18,7 @@ class GameLoop:
         self._clock = clock
         self._event_queue = event_queue
         self._renderer = renderer
+        self._options = options
 
     def start(self):
         """Function to start the game loop
@@ -26,10 +28,8 @@ class GameLoop:
         """
         while True:
             status = self._handle_events()
-            if status is False:
-                return Status.EXIT
-            if status is Status.MENU:
-                return status
+            if status is not True:
+                return None
 
             self._grid.update()
             self._render()
@@ -56,10 +56,8 @@ class GameLoop:
         self._renderer.render_game_over()
         while True:
             status = self._handle_events()
-            if status is False:
-                return Status.EXIT
-            if status is Status.MENU:
-                return status
+            if status is not True:
+                return
             self._clock.tick(60)
 
     def _handle_events(self):
@@ -80,11 +78,11 @@ class GameLoop:
                     self._grid.move_down()
 
                 if event.key == pygame.K_ESCAPE:
-                    return Status.MENU
+                    return self._options.set_state(Status.MENU)
 
             elif event.type == pygame.QUIT:
-                return False
-        return None
+                return self._options.set_state(Status.EXIT)
+        return True
 
     def _render(self):
         self._renderer.render_grid()

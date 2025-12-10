@@ -4,7 +4,7 @@ class Renderer:
     def __init__(self, display):
         self._display = display
         self._grid = None
-        self._menu = None
+        self._menu_background = None
         self.timer = None
 
         pygame.font.init()
@@ -14,8 +14,8 @@ class Renderer:
     def set_grid(self, grid):
         self._grid = grid
 
-    def set_menu(self, menu):
-        self._menu = menu
+    def set_menu_background(self, background):
+        self._menu_background = background
 
     def render_grid(self):
         self._display.fill((214, 189, 159))
@@ -52,7 +52,7 @@ class Renderer:
         pygame.display.update()
 
     def render_menu(self, manager):
-        self._display.blit(self._menu.background_surface, (0, 0))
+        self._display.blit(self._menu_background, (0, 0))
         manager.draw_ui(self._display)
 
         pygame.display.update()

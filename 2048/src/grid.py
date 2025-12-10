@@ -3,9 +3,8 @@ import pygame
 from spirtes.cell import Cell
 from spirtes.tile import Tile
 from spirtes.border import Border
-from direction import Direction
 from score import Score
-from status import Status
+from enums import Status, Direction
 
 class Grid:
     """class that handles the playing grid"""
