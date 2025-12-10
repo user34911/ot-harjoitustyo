@@ -21,4 +21,5 @@
 | | 1 | Sekvenssikaavio ja release | 
 | 7.12 | 2 | Refaktorointi ja peli ohi näyttö |
 | 9.12 | 2 | Ajastettu pelimuoto |
-| yht | 32 | |
+|  | 2 | Docstring ja dokumentaatio |
+| yht | 34 | |
