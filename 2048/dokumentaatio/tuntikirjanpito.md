@@ -22,5 +22,5 @@
 | 7.12 | 2 | Refaktorointi ja peli ohi näyttö |
 | 9.12 | 2 | Ajastettu pelimuoto |
 |  | 2 | Docstring ja dokumentaatio |
-| 10.12 | 2 | Refaktorointi |
-| yht | 36 | |
+| 10.12 | 3 | Refaktorointi |
+| yht | 37 | |
