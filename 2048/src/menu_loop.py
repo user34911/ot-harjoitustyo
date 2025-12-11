@@ -16,7 +16,7 @@ class MenuLoop:
     def start(self):
         self._screens[MenuScreen.MAIN_MENU].recreate(self._manager)
         self._screens[MenuScreen.START_OPTIONS].recreate(self._manager)
-        self._screens[MenuScreen.START_OPTIONS].container.hide()
+        self._screens[MenuScreen.LEADERBOARDS].recreate(self._manager)
 
         while True:
             status = self._handle_events()
@@ -60,8 +60,14 @@ class MenuLoop:
                     return self._options.set_state(Status.EXIT)
 
                 if event.ui_element == self._screens[MenuScreen.MAIN_MENU].leaderboard_button:
-                    self._screens[MenuScreen.LEADERBOARDS].recreate(self._manager)
                     self._screens[MenuScreen.LEADERBOARDS].container.show()
+                    self._screens[MenuScreen.LEADERBOARDS].show_standard_leaderboards()
+
+                if event.ui_element == self._screens[MenuScreen.LEADERBOARDS].standard_button:
+                    self._screens[MenuScreen.LEADERBOARDS].show_standard_leaderboards()
+
+                if event.ui_element == self._screens[MenuScreen.LEADERBOARDS].timed_button:
+                    self._screens[MenuScreen.LEADERBOARDS].show_timed_leaderboards()
 
         return True
 

@@ -1,5 +1,6 @@
 import csv
 import os
+from datetime import datetime
 from enums import Leaderboard
 
 def add_to_leaderboard(fields, leaderboard: Leaderboard):
@@ -28,4 +29,4 @@ def _sort_entries(entries, leaderboard: Leaderboard):
     if leaderboard is Leaderboard.STANDARD:
         return sorted(entries, key=lambda x: int(x[-1]), reverse=True)
     if leaderboard is Leaderboard.TIMED:
-        return sorted(entries, key=lambda x: int(x[-1]), reverse=True)
+        return sorted(entries, key=lambda entry: datetime.strptime(entry[-1], "%M:%S"))
