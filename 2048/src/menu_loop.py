@@ -19,8 +19,7 @@ class MenuLoop:
         self._screens[MenuScreen.LEADERBOARDS].recreate(self._manager)
 
         while True:
-            status = self._handle_events()
-            if status is not True:
+            if self._handle_events() is not True:
                 return
 
             time_delta = self._clock.tick(60) / 1000.0
@@ -36,38 +35,52 @@ class MenuLoop:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    try:
-                        self._screens[MenuScreen.START_OPTIONS].container.hide()
-                        self._screens[MenuScreen.LEADERBOARDS].container.hide()
-                    except AttributeError:
-                        pass
+                    self._screens[MenuScreen.START_OPTIONS].container.hide()
+                    self._screens[MenuScreen.LEADERBOARDS].container.hide()
 
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == self._screens[MenuScreen.MAIN_MENU].start_button:
-                    self._screens[MenuScreen.START_OPTIONS].container.show()
+                if self._screens[MenuScreen.LEADERBOARDS].container.visible:
+                    state = self._handle_leaderboards_event(event)
+                elif self._screens[MenuScreen.START_OPTIONS].container.visible:
+                    state = self._handle_start_option_event(event)
+                else:
+                    state = self._handle_main_menu_event(event)
+                return state if state is not True else True
 
-                if event.ui_element == self._screens[MenuScreen.START_OPTIONS].start_game_button:
-                    if self._screens[MenuScreen.START_OPTIONS].timed_mode_checkbox.is_checked:
-                        self._options.set_timed(True)
-                    else:
-                        self._options.set_timed(False)
-                    return self._options.set_state(Status.GAME)
+        return True
 
-                if event.ui_element == self._screens[MenuScreen.START_OPTIONS].back_button:
-                    self._screens[MenuScreen.START_OPTIONS].container.hide()
+    def _handle_leaderboards_event(self, event):
+        if event.ui_element == self._screens[MenuScreen.LEADERBOARDS].standard_button:
+            self._screens[MenuScreen.LEADERBOARDS].show_standard_leaderboards()
 
-                if event.ui_element == self._screens[MenuScreen.MAIN_MENU].exit_button:
-                    return self._options.set_state(Status.EXIT)
+        if event.ui_element == self._screens[MenuScreen.LEADERBOARDS].timed_button:
+            self._screens[MenuScreen.LEADERBOARDS].show_timed_leaderboards()
 
-                if event.ui_element == self._screens[MenuScreen.MAIN_MENU].leaderboard_button:
-                    self._screens[MenuScreen.LEADERBOARDS].container.show()
-                    self._screens[MenuScreen.LEADERBOARDS].show_standard_leaderboards()
+        return True
 
-                if event.ui_element == self._screens[MenuScreen.LEADERBOARDS].standard_button:
-                    self._screens[MenuScreen.LEADERBOARDS].show_standard_leaderboards()
+    def _handle_start_option_event(self, event):
+        if event.ui_element == self._screens[MenuScreen.START_OPTIONS].back_button:
+            self._screens[MenuScreen.START_OPTIONS].container.hide()
 
-                if event.ui_element == self._screens[MenuScreen.LEADERBOARDS].timed_button:
-                    self._screens[MenuScreen.LEADERBOARDS].show_timed_leaderboards()
+        if event.ui_element == self._screens[MenuScreen.START_OPTIONS].start_game_button:
+            if self._screens[MenuScreen.START_OPTIONS].timed_mode_checkbox.is_checked:
+                self._options.set_timed(True)
+            else:
+                self._options.set_timed(False)
+            return self._options.set_state(Status.GAME)
+
+        return True
+
+    def _handle_main_menu_event(self, event):
+        if event.ui_element == self._screens[MenuScreen.MAIN_MENU].exit_button:
+            return self._options.set_state(Status.EXIT)
+
+        if event.ui_element == self._screens[MenuScreen.MAIN_MENU].leaderboard_button:
+            self._screens[MenuScreen.LEADERBOARDS].container.show()
+            self._screens[MenuScreen.LEADERBOARDS].show_standard_leaderboards()
+
+        if event.ui_element == self._screens[MenuScreen.MAIN_MENU].start_button:
+            self._screens[MenuScreen.START_OPTIONS].container.show()
 
         return True
 

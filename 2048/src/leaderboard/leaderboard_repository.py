@@ -24,9 +24,11 @@ def _get_filepath(leaderboard: Leaderboard):
         return "src/leaderboard/standard_leaderboard.csv"
     if leaderboard is Leaderboard.TIMED:
         return "src/leaderboard/timed_leaderboard.csv"
+    return None
 
 def _sort_entries(entries, leaderboard: Leaderboard):
     if leaderboard is Leaderboard.STANDARD:
         return sorted(entries, key=lambda x: int(x[-1]), reverse=True)
     if leaderboard is Leaderboard.TIMED:
         return sorted(entries, key=lambda entry: datetime.strptime(entry[-1], "%M:%S"))
+    return None

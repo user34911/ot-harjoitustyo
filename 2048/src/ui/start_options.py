@@ -16,7 +16,7 @@ class StartOptions:
         self.container = UIPanel(pygame.Rect(50, 50, self._window_size[0] - 100, self._window_size[1] - 100),
                                                manager=manager,
                                                visible=True)
-        
+
         self.timed_mode_checkbox = UICheckBox(
             relative_rect=pygame.Rect(50, 50, 30, 30),
             text="Timed mode",
