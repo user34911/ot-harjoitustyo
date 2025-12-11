@@ -1,6 +1,6 @@
 import pygame
-from enums import Status, Direction
-from leaderboard.leaderboard_repository import add_score_to_lb
+from enums import Status, Direction, Leaderboard
+from leaderboard.leaderboard_repository import add_to_leaderboard
 from options import Options
 
 class GameLoop:
@@ -40,10 +40,13 @@ class GameLoop:
             if game_state is Status.OVER:
                 player = "guest"
                 score = self._grid.score.get_score()
-                add_score_to_lb(player, score)
+                add_to_leaderboard([player, score], Leaderboard.STANDARD)
                 return self.game_over()
 
             if game_state is Status.TIMED_OVER:
+                player = "guest"
+                score = self._grid.score.get_score()
+                add_to_leaderboard([player, score], Leaderboard.TIMED)
                 return self.game_over()
 
     def game_over(self):

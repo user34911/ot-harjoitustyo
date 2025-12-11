@@ -1,6 +1,7 @@
 import pygame
 from pygame_gui.elements import UIScrollingContainer, UILabel, UIPanel, UIButton
 from leaderboard.leaderboard_repository import get_leaderboard
+from enums import Leaderboard
 
 class Leaderboards:
     def __init__(self, window_size):
@@ -13,7 +14,7 @@ class Leaderboards:
         self.timed_button = None
 
     def recreate(self, manager):
-        content = get_leaderboard()
+        content = get_leaderboard(Leaderboard.STANDARD)
 
         panel_height = len(content) * 40 + 100
         panel_min_height = 500

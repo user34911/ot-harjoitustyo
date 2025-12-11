@@ -26,3 +26,7 @@ class Direction(Enum):
     UP = 2
     RIGHT = 3
     DOWN = 4
+
+class Leaderboard(Enum):
+    STANDARD = 1
+    TIMED = 2

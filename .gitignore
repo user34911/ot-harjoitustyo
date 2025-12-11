@@ -5,6 +5,6 @@ htmlcov
 .venv
 main_window.py
 test.py
-leaderboard.csv
+*_leaderboard.csv
 scrolling.py
 textbox_test.py
