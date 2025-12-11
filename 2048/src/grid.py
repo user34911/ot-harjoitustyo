@@ -4,7 +4,7 @@ from spirtes.cell import Cell
 from spirtes.tile import Tile
 from spirtes.border import Border
 from score import Score
-from enums import Status, Direction
+from enums import Status, Direction, Object
 
 class Grid:
     """class that handles the playing grid"""
@@ -19,18 +19,14 @@ class Grid:
             timed (bool, optional): is the game timed or not. Defaults to False.
         """
         self.cell_size = cell_size
-        self.grid_size = grid_size
         self.x = position[0]
         self.y = position[1]
         self.score = Score()
         self.timed = timed
 
-        self.tiles = pygame.sprite.Group()
-        self.cells = pygame.sprite.Group()
-        self.borders = pygame.sprite.Group()
-        self.all_sprites = pygame.sprite.Group()
+        self.objects = {object_type: pygame.sprite.Group() for object_type in Object}
 
-        self._initialise_grid(self.grid_size)
+        self._initialise_grid(grid_size)
 
     def _initialise_grid(self, grid_size):
         """Generates the initial grid adding 2 starting tiles
@@ -42,35 +38,33 @@ class Grid:
             for x in range(grid_size):
                 normalised_x = x * self.cell_size + self.x
                 normalised_y = y * self.cell_size + self.y
-                self.cells.add(Cell(size=self.cell_size, x=normalised_x, y=normalised_y))
+                cell = Cell(size=self.cell_size, x=normalised_x, y=normalised_y)
+                self.objects[Object.CELL].add(cell)
 
         thickness = self.cell_size // 20
-        length = self.cell_size * self.grid_size + thickness
-        offset = self.cell_size * self.grid_size
+        length = self.cell_size * grid_size + thickness
+        offset = self.cell_size * grid_size
 
-        self.borders.add(Border(length, thickness, self.x, self.y-thickness))
-        self.borders.add(Border(length, thickness, self.x-thickness, self.y+offset))
-        self.borders.add(Border(thickness, length, self.x-thickness, self.y-thickness))
-        self.borders.add(Border(thickness, length, self.x+offset, self.y))
+        self.objects[Object.BORDER].add(Border(length, thickness, self.x, self.y-thickness))
+        self.objects[Object.BORDER].add(Border(length, thickness, self.x-thickness, self.y+offset))
+        self.objects[Object.BORDER].add(Border(thickness, length, self.x-thickness, self.y-thickness))
+        self.objects[Object.BORDER].add(Border(thickness, length, self.x+offset, self.y))
 
         self._spawn_tile()
         self._spawn_tile()
-
-        self.all_sprites.add(self.tiles, self.cells, self.borders)
 
     def _spawn_tile(self):
         """Function to spawn a tile of a weighted random value to a random empty cell on the grid"""
         value = random.choice([2, 2, 2, 4])
         # Pick a cell that hasn't got a tile on it by random
-        spawn_cell = random.choice([cell for cell in self.cells.sprites() if not cell.tile])
+        spawn_cell = random.choice([cell for cell in self.objects[Object.CELL].sprites() if not cell.tile])
         new_tile = Tile(size=self.cell_size, value=value, x=spawn_cell.rect.x, y=spawn_cell.rect.y)
         spawn_cell.tile = True
-        self.tiles.add(new_tile)
-        self.all_sprites.add(new_tile)
+        self.objects[Object.TILE].add(new_tile)
 
     def update(self):
         """Updates tiles"""
-        self.tiles.update()
+        self.objects[Object.TILE].update()
 
     def move(self, direction: Direction):
         """Function that moves tiles in desired direction
@@ -123,7 +117,7 @@ class Grid:
         test_move_value = 10
         movables = []
 
-        for tile in self.tiles:
+        for tile in self.objects[Object.TILE]:
             self._move_tile(tile, direction, test_move_value)
             if not self._collisions(tile):
                 movables.append(tile)
@@ -160,8 +154,8 @@ class Grid:
         Returns:
             bool: True if there were collisions
         """
-        border_collisions = pygame.sprite.spritecollide(tile, self.borders, False)
-        test_tiles = pygame.sprite.Group([t for t in self.tiles if t != tile])
+        border_collisions = pygame.sprite.spritecollide(tile, self.objects[Object.BORDER], False)
+        test_tiles = pygame.sprite.Group([t for t in self.objects[Object.TILE] if t != tile])
         tile_collisions = pygame.sprite.spritecollide(tile, test_tiles, False)
 
         if tile_collisions:
@@ -193,7 +187,7 @@ class Grid:
         if tile.lock is True:
             return
 
-        test_tiles = pygame.sprite.Group([t for t in self.tiles if t != tile])
+        test_tiles = pygame.sprite.Group([t for t in self.objects[Object.TILE] if t != tile])
         tile_collisions = pygame.sprite.spritecollide(tile, test_tiles, True)
 
         if tile_collisions:
@@ -201,14 +195,13 @@ class Grid:
             self.score.add_score(tile.value*2)
             new_tile.lock = True
 
-            self.tiles.add(new_tile)
-            self.all_sprites.add(new_tile)
+            self.objects[Object.TILE].add(new_tile)
             tile.kill()
 
     def _update_cell_tiles(self):
         """Checks every cell for tiles"""
-        for cell in self.cells:
-            tile_on_cell = pygame.sprite.spritecollide(cell, self.tiles, False)
+        for cell in self.objects[Object.CELL]:
+            tile_on_cell = pygame.sprite.spritecollide(cell, self.objects[Object.TILE], False)
             if tile_on_cell:
                 cell.tile = True
             else:
@@ -216,7 +209,7 @@ class Grid:
 
     def _unlock_all_tiles(self):
         """unlocks all tiles so they can combine again"""
-        for tile in self.tiles:
+        for tile in self.objects[Object.TILE]:
             tile.lock = False
 
     def get_game_state(self):
@@ -227,7 +220,7 @@ class Grid:
         """
         if self.timed and self._tile_on_grid(64):
             return Status.TIMED_OVER
-        if len([cell for cell in self.cells.sprites() if not cell.tile]) == 0:
+        if len([cell for cell in self.objects[Object.CELL].sprites() if not cell.tile]) == 0:
             return Status.OVER
         return None
 
@@ -240,7 +233,7 @@ class Grid:
         Returns:
             bool: True if a tile of desired value is on the grid
         """
-        for tile in self.tiles:
+        for tile in self.objects[Object.TILE]:
             if tile.value == value:
                 return True
         return False

@@ -30,3 +30,8 @@ class Direction(Enum):
 class Leaderboard(Enum):
     STANDARD = 1
     TIMED = 2
+
+class Object(Enum):
+    TILE = 1
+    CELL = 2
+    BORDER = 3
