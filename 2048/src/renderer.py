@@ -7,7 +7,6 @@ class Renderer:
         self._display = display
         self._grid = None
         self._menu_background = None
-        self.timer = None
 
         pygame.font.init()
         self._font = pygame.font.SysFont("Arial", 30)
@@ -25,13 +24,12 @@ class Renderer:
         self._grid.objects[Object.CELL].draw(self._display)
         self._grid.objects[Object.BORDER].draw(self._display)
         self._render_score()
-        if self._grid.timed is True:
-            self._render_timer()
+        self._render_timer()
 
         pygame.display.update()
 
     def _render_timer(self):
-        text = self._font.render(str(self.timer), True, (255, 255, 255))
+        text = self._font.render(str(self._grid.timer.get_time()), True, (255, 255, 255))
         text_rect = text.get_rect()
         text_rect.x = self._grid.x
         text_rect.y = self._grid.y + (self._grid.cell_size * 4) + 50

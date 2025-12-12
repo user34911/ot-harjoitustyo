@@ -15,7 +15,7 @@ class Timer:
         minutes, seconds = divmod(current_seconds, 60)
         return f"{int(minutes)}:{int(seconds):02d}"
 
-    def __str__(self):
+    def get_time(self):
         if not self._start_time:
             return None
         if not self._stop_time:

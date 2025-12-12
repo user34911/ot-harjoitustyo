@@ -26,6 +26,7 @@ class GameLoop:
         Returns:
             Status: which state the game should go to next
         """
+        self._grid.timer.start()
         while True:
             status = self._handle_events()
             if status is not True:
@@ -45,8 +46,7 @@ class GameLoop:
 
             if game_state is Status.TIMED_OVER:
                 player = "guest"
-                score = self._grid.score.get_score()
-                add_to_leaderboard([player, score], Leaderboard.TIMED)
+                add_to_leaderboard([player, self._grid.timer.get_time()], Leaderboard.TIMED)
                 return self.game_over()
 
     def game_over(self):

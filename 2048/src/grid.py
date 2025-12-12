@@ -4,6 +4,7 @@ from spirtes.cell import Cell
 from spirtes.tile import Tile
 from spirtes.border import Border
 from score import Score
+from game_timer import Timer
 from enums import Status, Direction, Object
 
 class Grid:
@@ -23,6 +24,7 @@ class Grid:
         self.y = position[1]
         self.score = Score()
         self.timed = timed
+        self.timer = Timer()
 
         self.objects = {object_type: pygame.sprite.Group() for object_type in Object}
 
@@ -41,14 +43,14 @@ class Grid:
                 cell = Cell(size=self.cell_size, x=normalised_x, y=normalised_y)
                 self.objects[Object.CELL].add(cell)
 
-        thickness = self.cell_size // 20
-        length = self.cell_size * grid_size + thickness
+        width = self.cell_size // 20
+        length = self.cell_size * grid_size + width
         offset = self.cell_size * grid_size
 
-        self.objects[Object.BORDER].add(Border(length, thickness, self.x, self.y-thickness))
-        self.objects[Object.BORDER].add(Border(length, thickness, self.x-thickness, self.y+offset))
-        self.objects[Object.BORDER].add(Border(thickness, length, self.x-thickness, self.y-thickness))
-        self.objects[Object.BORDER].add(Border(thickness, length, self.x+offset, self.y))
+        self.objects[Object.BORDER].add(Border(length, width, self.x, self.y - width))
+        self.objects[Object.BORDER].add(Border(length, width, self.x - width, self.y + offset))
+        self.objects[Object.BORDER].add(Border(width, length, self.x - width, self.y - width))
+        self.objects[Object.BORDER].add(Border(width, length, self.x + offset, self.y))
 
         self._spawn_tile()
         self._spawn_tile()
@@ -57,7 +59,8 @@ class Grid:
         """Function to spawn a tile of a weighted random value to a random empty cell on the grid"""
         value = random.choice([2, 2, 2, 4])
         # Pick a cell that hasn't got a tile on it by random
-        spawn_cell = random.choice([cell for cell in self.objects[Object.CELL].sprites() if not cell.tile])
+        available = [cell for cell in self.objects[Object.CELL].sprites() if not cell.tile]
+        spawn_cell = random.choice(available)
         new_tile = Tile(size=self.cell_size, value=value, x=spawn_cell.rect.x, y=spawn_cell.rect.y)
         spawn_cell.tile = True
         self.objects[Object.TILE].add(new_tile)
@@ -219,8 +222,10 @@ class Grid:
             Status: returns game over status if game is over None otherwise
         """
         if self.timed and self._tile_on_grid(64):
+            self.timer.stop()
             return Status.TIMED_OVER
         if len([cell for cell in self.objects[Object.CELL].sprites() if not cell.tile]) == 0:
+            self.timer.stop()
             return Status.OVER
         return None
 
