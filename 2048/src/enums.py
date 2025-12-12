@@ -10,7 +10,7 @@ class Option(Enum):
     GRID_SIZE = 2
     CELL_SIZE = 3
     POSITION = 4
-    TIMED = 5
+    MODE = 5
     THEME_PATH = 6
 
 class Status(Enum):
@@ -18,8 +18,11 @@ class Status(Enum):
     GAME = 2
     EXIT = 3
     OVER = 4
-    TIMED_GAME = 5
-    TIMED_OVER = 6
+
+class Game(Enum):
+    ONGOING = 1
+    LOST = 2
+    WON = 3
 
 class Direction(Enum):
     LEFT = 1
@@ -27,7 +30,7 @@ class Direction(Enum):
     RIGHT = 3
     DOWN = 4
 
-class Leaderboard(Enum):
+class Mode(Enum):
     STANDARD = 1
     TIMED = 2
 

@@ -1,7 +1,7 @@
 import pygame
 from pygame_gui.elements import UIScrollingContainer, UILabel, UIPanel, UIButton
 from leaderboard.leaderboard_repository import get_leaderboard
-from enums import Leaderboard
+from enums import Mode
 
 class Leaderboards:
     def __init__(self, window_size):
@@ -42,7 +42,7 @@ class Leaderboards:
                                                        should_grow_automatically=True,
                                                        allow_scroll_x=False)
 
-        content = get_leaderboard(Leaderboard.STANDARD)
+        content = get_leaderboard(Mode.STANDARD)
         self._recreate_leaderboard(manager, self.standard_container, content)
 
         self.timed_container = UIScrollingContainer(pygame.Rect(0, 0, self._window_size[0] - 103, self._window_size[1] - 170),
@@ -52,7 +52,7 @@ class Leaderboards:
                                                     should_grow_automatically=True,
                                                     allow_scroll_x=False)
 
-        content = get_leaderboard(Leaderboard.TIMED)
+        content = get_leaderboard(Mode.TIMED)
         self._recreate_leaderboard(manager, self.timed_container, content)
 
         self.container.hide()

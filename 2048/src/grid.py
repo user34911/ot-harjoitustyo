@@ -5,11 +5,11 @@ from spirtes.tile import Tile
 from spirtes.border import Border
 from score import Score
 from game_timer import Timer
-from enums import Status, Direction, Object
+from enums import Status, Direction, Object, Mode, Game
 
 class Grid:
     """class that handles the playing grid"""
-    def __init__(self, grid_size: int, cell_size: int, position: tuple, timed = False):
+    def __init__(self, grid_size: int, cell_size: int, position: tuple, mode = Mode.STANDARD):
         """Constructor that generates the grid and starts the game
 
         Args:
@@ -23,7 +23,7 @@ class Grid:
         self.x = position[0]
         self.y = position[1]
         self.score = Score()
-        self.timed = timed
+        self._mode = mode
         self.timer = Timer()
 
         self.objects = {object_type: pygame.sprite.Group() for object_type in Object}
@@ -221,13 +221,16 @@ class Grid:
         Returns:
             Status: returns game over status if game is over None otherwise
         """
-        if self.timed and self._tile_on_grid(64):
+        if self._mode is Mode.TIMED and self._tile_on_grid(256):
             self.timer.stop()
-            return Status.TIMED_OVER
+            return Game.WON
         if len([cell for cell in self.objects[Object.CELL].sprites() if not cell.tile]) == 0:
             self.timer.stop()
-            return Status.OVER
-        return None
+            return Game.LOST
+        return Game.ONGOING
+
+    def get_game_mode(self):
+        return self._mode
 
     def _tile_on_grid(self, value):
         """check if a tile of specified value is on the grid

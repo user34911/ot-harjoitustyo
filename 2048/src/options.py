@@ -1,4 +1,4 @@
-from enums import Status, Option
+from enums import Status, Option, Mode
 
 class Options:
     def __init__(self):
@@ -6,7 +6,7 @@ class Options:
         self._grid_size = 4
         self._cell_size = 100
         self._position = (100, 100)
-        self._timed = False
+        self._mode = Mode.STANDARD
 
         self._theme_path = r"src\ui\theme.json"
 
@@ -17,7 +17,7 @@ class Options:
                    Option.GRID_SIZE: self._grid_size,
                    Option.CELL_SIZE: self._cell_size,
                    Option.POSITION: self._position,
-                   Option.TIMED: self._timed}
+                   Option.MODE: self._mode}
         return options
 
     def get_menu_options(self):
@@ -31,11 +31,11 @@ class Options:
     def set_state(self, state):
         self._state = state
 
-    def set_timed(self, state: bool):
-        self._timed = state
+    def set_mode(self, mode: Mode):
+        self._mode = mode
 
-    def is_timed(self):
-        return self._timed
+    def get_mode(self):
+        return self._mode
 
     def get_resolution(self):
         return self._resolution

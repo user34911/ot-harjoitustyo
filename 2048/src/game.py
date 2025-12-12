@@ -19,10 +19,6 @@ class Game:
     def _initialise_game(self):
         opt = self.options.get_game_options()
         self._grid = Grid(opt[Option.GRID_SIZE], opt[Option.CELL_SIZE],
-                          opt[Option.POSITION], opt[Option.TIMED])
+                          opt[Option.POSITION], opt[Option.MODE])
         self._loop = GameLoop(self._grid, self.renderer, self.options, EventQueue(), Clock())
         self.renderer.set_grid(self._grid)
-        if self.options.is_timed():
-            timer = Timer()
-            self.renderer.timer = timer
-            timer.start()

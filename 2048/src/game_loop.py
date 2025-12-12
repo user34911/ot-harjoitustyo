@@ -1,11 +1,12 @@
 import pygame
-from enums import Status, Direction, Leaderboard
+from enums import Status, Direction, Mode, Game
 from leaderboard.leaderboard_repository import add_to_leaderboard
 from options import Options
+from grid import Grid
 
 class GameLoop:
     """Class that handles the game loop"""
-    def __init__(self, grid, renderer, options: Options, event_queue, clock):
+    def __init__(self, grid: Grid, renderer, options: Options, event_queue, clock):
         """Constructor
 
         Args:
@@ -37,17 +38,31 @@ class GameLoop:
             self._clock.tick(60)
 
             game_state = self._grid.get_game_state()
+            if game_state is not Game.ONGOING:
+                return self._game_over(game_state)
 
-            if game_state is Status.OVER:
-                player = "guest"
-                score = self._grid.score.get_score()
-                add_to_leaderboard([player, score], Leaderboard.STANDARD)
-                return self.game_over()
+    def _game_over(self, final_state):
+        mode = self._grid.get_game_mode()
+        if final_state is Game.WON and mode is Mode.TIMED:
+            self._submit_to_leaderboards(mode)
+        elif mode is Mode.STANDARD:
+            self._submit_to_leaderboards(mode)
 
-            if game_state is Status.TIMED_OVER:
-                player = "guest"
-                add_to_leaderboard([player, self._grid.timer.get_time()], Leaderboard.TIMED)
-                return self.game_over()
+        self._renderer.render_game_over()
+        return self._game_over_loop()
+
+    def _game_over_loop(self):
+        while True:
+            if self._handle_events() is not True:
+                return
+            self._clock.tick(60)
+
+    def _submit_to_leaderboards(self, mode):
+        player = "guest"
+        if mode is Mode.STANDARD:
+            add_to_leaderboard([player, self._grid.score.get_score()], Mode.STANDARD)
+        else:
+            add_to_leaderboard([player, self._grid.timer.get_time()], Mode.TIMED)
 
     def game_over(self):
         """Stops the game from being played showing the user the final alignmnet

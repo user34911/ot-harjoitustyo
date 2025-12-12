@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 from pygame_gui import UIManager
-from enums import Status
+from enums import Status, Mode
 from enums import MenuScreen
 from options import Options
 
@@ -64,9 +64,9 @@ class MenuLoop:
 
         if event.ui_element == self._screens[MenuScreen.START_OPTIONS].start_game_button:
             if self._screens[MenuScreen.START_OPTIONS].timed_mode_checkbox.is_checked:
-                self._options.set_timed(True)
+                self._options.set_mode(Mode.TIMED)
             else:
-                self._options.set_timed(False)
+                self._options.set_mode(Mode.STANDARD)
             return self._options.set_state(Status.GAME)
 
         return True
