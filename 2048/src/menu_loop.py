@@ -1,8 +1,7 @@
 import pygame
 import pygame_gui
 from pygame_gui import UIManager
-from enums import Status, Mode
-from enums import MenuScreen
+from enums import Status, Mode, MenuScreen
 from options import Options
 
 class MenuLoop:

@@ -5,7 +5,7 @@ from spirtes.tile import Tile
 from spirtes.border import Border
 from score import Score
 from game_timer import Timer
-from enums import Status, Direction, Object, Mode, Game
+from enums import Direction, Object, Mode, Game
 
 class Grid:
     """class that handles the playing grid"""

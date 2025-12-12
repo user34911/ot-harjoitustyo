@@ -3,7 +3,6 @@ from game_loop import GameLoop
 from clock import Clock
 from event_queue import EventQueue
 from options import Option
-from game_timer import Timer
 
 class Game:
     def __init__(self, options, renderer):
