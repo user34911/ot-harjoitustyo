@@ -13,11 +13,10 @@ class Option(Enum):
     MODE = 5
     THEME_PATH = 6
 
-class Status(Enum):
+class State(Enum):
     MENU = 1
     GAME = 2
     EXIT = 3
-    OVER = 4
 
 class Game(Enum):
     ONGOING = 1

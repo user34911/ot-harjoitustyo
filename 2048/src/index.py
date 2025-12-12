@@ -1,7 +1,7 @@
 import pygame
 from renderer import Renderer
 from options import Options
-from enums import Status
+from enums import State
 from game import Game
 from menu import Menu
 
@@ -16,13 +16,13 @@ def main():
     pygame.init()
     while True:
         state = options.get_state()
-        if state is Status.MENU:
+        if state is State.MENU:
             Menu(options, renderer).start()
 
-        if state is Status.GAME:
+        if state is State.GAME:
             Game(options, renderer).start()
 
-        if state is Status.EXIT:
+        if state is State.EXIT:
             break
 
 if __name__ == "__main__":

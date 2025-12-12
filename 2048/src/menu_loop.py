@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 from pygame_gui import UIManager
-from enums import Status, Mode, MenuScreen
+from enums import State, Mode, MenuScreen
 from options import Options
 
 class MenuLoop:
@@ -30,7 +30,7 @@ class MenuLoop:
             self._manager.process_events(event)
 
             if event.type == pygame.QUIT:
-                return self._options.set_state(Status.EXIT)
+                return self._options.set_state(State.EXIT)
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -66,13 +66,13 @@ class MenuLoop:
                 self._options.set_mode(Mode.TIMED)
             else:
                 self._options.set_mode(Mode.STANDARD)
-            return self._options.set_state(Status.GAME)
+            return self._options.set_state(State.GAME)
 
         return True
 
     def _handle_main_menu_event(self, event):
         if event.ui_element == self._screens[MenuScreen.MAIN_MENU].exit_button:
-            return self._options.set_state(Status.EXIT)
+            return self._options.set_state(State.EXIT)
 
         if event.ui_element == self._screens[MenuScreen.MAIN_MENU].leaderboard_button:
             self._screens[MenuScreen.LEADERBOARDS].container.show()

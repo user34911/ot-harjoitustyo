@@ -1,4 +1,4 @@
-from enums import Status, Option, Mode
+from enums import State, Option, Mode
 
 class Options:
     def __init__(self):
@@ -10,7 +10,7 @@ class Options:
 
         self._theme_path = r"src\ui\theme.json"
 
-        self._state = Status.MENU
+        self._state = State.MENU
 
     def get_game_options(self):
         options = {Option.RESOLUTION: self._resolution,

@@ -1,5 +1,5 @@
 import pygame
-from enums import Status, Direction, Mode, Game
+from enums import State, Direction, Mode, Game
 from leaderboard.leaderboard_repository import add_to_leaderboard
 from options import Options
 from grid import Grid
@@ -29,8 +29,7 @@ class GameLoop:
         """
         self._grid.timer.start()
         while True:
-            status = self._handle_events()
-            if status is not True:
+            if self._handle_events() is not True:
                 return None
 
             self._grid.update()
@@ -96,10 +95,10 @@ class GameLoop:
                     self._grid.move(Direction.DOWN)
 
                 if event.key == pygame.K_ESCAPE:
-                    return self._options.set_state(Status.MENU)
+                    return self._options.set_state(State.MENU)
 
             elif event.type == pygame.QUIT:
-                return self._options.set_state(Status.EXIT)
+                return self._options.set_state(State.EXIT)
         return True
 
     def _render(self):
