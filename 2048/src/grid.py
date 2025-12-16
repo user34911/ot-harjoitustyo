@@ -62,7 +62,7 @@ class Grid:
         available = [cell for cell in self.objects[Object.CELL].sprites() if not cell.tile]
         spawn_cell = random.choice(available)
         new_tile = Tile(size=self.cell_size, value=value, x=spawn_cell.rect.x, y=spawn_cell.rect.y)
-        spawn_cell.tile = True
+        spawn_cell.tile = new_tile
         self.objects[Object.TILE].add(new_tile)
 
     def update(self):
@@ -204,11 +204,11 @@ class Grid:
     def _update_cell_tiles(self):
         """Checks every cell for tiles"""
         for cell in self.objects[Object.CELL]:
-            tile_on_cell = pygame.sprite.spritecollide(cell, self.objects[Object.TILE], False)
-            if tile_on_cell:
-                cell.tile = True
+            tiles_on_cell = pygame.sprite.spritecollide(cell, self.objects[Object.TILE], False)
+            if tiles_on_cell:
+                cell.tile = tiles_on_cell[0]
             else:
-                cell.tile = False
+                cell.tile = None
 
     def _unlock_all_tiles(self):
         """unlocks all tiles so they can combine again"""
@@ -221,13 +221,13 @@ class Grid:
         Returns:
             Status: returns game over status if game is over None otherwise
         """
+        if self._any_empty_cells() or self._any_movable_tiles():
+            return Game.ONGOING
+
+        self.timer.stop()
         if self._mode is Mode.TIMED and self._tile_on_grid(256):
-            self.timer.stop()
             return Game.WON
-        if len([cell for cell in self.objects[Object.CELL].sprites() if not cell.tile]) == 0:
-            self.timer.stop()
-            return Game.LOST
-        return Game.ONGOING
+        return Game.LOST
 
     def get_game_mode(self):
         return self._mode
@@ -245,3 +245,16 @@ class Grid:
             if tile.value == value:
                 return True
         return False
+
+    def _any_movable_tiles(self):
+        directions = [Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT]
+        for direction in directions:
+            if len(self._get_movable_tiles(direction)) != 0:
+                return True
+        return False
+
+    def _any_empty_cells(self):
+        empty_cells = [cell for cell in self.objects[Object.CELL].sprites() if not cell.tile]
+        if len(empty_cells) == 0:
+            return False
+        return True
