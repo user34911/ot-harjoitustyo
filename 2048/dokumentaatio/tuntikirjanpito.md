@@ -23,4 +23,7 @@
 | 9.12 | 2 | Ajastettu pelimuoto |
 |  | 2 | Docstring ja dokumentaatio |
 | 10.12 | 3 | Refaktorointi |
-| yht | 37 | |
+| 11.12 | 1 | Refaktorointo |
+| 12.12 | 3 | Tulostaulukko ajastetulle pelimuodolle |
+| 16.12 | 2 | Muokautettava ruudukon koko |
+| yht | 43 | |
