@@ -32,14 +32,14 @@ class Renderer:
         text = self._font.render(str(self._grid.timer.get_time()), True, (255, 255, 255))
         text_rect = text.get_rect()
         text_rect.x = self._grid.x
-        text_rect.y = self._grid.y + (self._grid.cell_size * 4) + 50
+        text_rect.y = self._grid.y + (self._grid.cell_size * self._grid.grid_size) + 50
         self._display.blit(text, text_rect)
 
     def _render_score(self):
         text = self._font.render(self._grid.score.get_score(), True, (255, 255, 255))
         text_rect = text.get_rect()
         text_rect.x = self._grid.x
-        text_rect.y = self._grid.y + (self._grid.cell_size * 4) + 10
+        text_rect.y = self._grid.y + (self._grid.cell_size * self._grid.grid_size) + 10
         self._display.blit(text, text_rect)
 
     def render_game_over(self):

@@ -66,6 +66,11 @@ class MenuLoop:
                 self._options.change(Option.MODE, Mode.TIMED)
             else:
                 self._options.change(Option.MODE, Mode.STANDARD)
+
+            grid_size = self._screens[MenuScreen.START_OPTIONS].grid_size_dropdown.selected_option[0]
+            grid_size = int(self._parse_option_string(grid_size)[0])
+            self._options.change(Option.GRID_SIZE, grid_size)
+
             return self._options.change(Option.STATE, State.GAME)
 
         return True
@@ -85,3 +90,7 @@ class MenuLoop:
 
     def _render(self):
         self._renderer.render_menu(self._manager)
+
+    def _parse_option_string(self, string: str):
+        parsed = string.split("x")
+        return (parsed[0], parsed[1])

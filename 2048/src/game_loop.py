@@ -42,9 +42,9 @@ class GameLoop:
 
     def _game_over(self, final_state):
         mode = self._grid.get_game_mode()
-        if final_state is Game.WON and mode is Mode.TIMED:
+        if final_state is Game.WON and mode is Mode.TIMED and self._grid.grid_size == 4:
             self._submit_to_leaderboards(mode)
-        elif mode is Mode.STANDARD:
+        elif mode is Mode.STANDARD and self._grid.grid_size == 4:
             self._submit_to_leaderboards(mode)
 
         self._renderer.render_game_over()

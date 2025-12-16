@@ -20,6 +20,7 @@ class Grid:
             timed (bool, optional): is the game timed or not. Defaults to False.
         """
         self.cell_size = cell_size
+        self.grid_size = grid_size
         self.x = position[0]
         self.y = position[1]
         self.score = Score()
