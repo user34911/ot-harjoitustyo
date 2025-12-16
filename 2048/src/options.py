@@ -12,6 +12,14 @@ class Options:
 
         self._state = State.MENU
 
+        self._options = {Option.RESOLUTION: self._resolution,
+                         Option.GRID_SIZE: self._grid_size,
+                         Option.CELL_SIZE: self._cell_size,
+                         Option.POSITION: self._position,
+                         Option.MODE: self._mode,
+                         Option.THEME_PATH: self._theme_path,
+                         Option.STATE: self._state}
+
     def get_game_options(self):
         options = {Option.RESOLUTION: self._resolution,
                    Option.GRID_SIZE: self._grid_size,
@@ -25,17 +33,8 @@ class Options:
                    Option.THEME_PATH: self._theme_path}
         return options
 
-    def get_state(self):
-        return self._state
+    def get(self, option: Option):
+        return self._options[option]
 
-    def set_state(self, state):
-        self._state = state
-
-    def set_mode(self, mode: Mode):
-        self._mode = mode
-
-    def get_mode(self):
-        return self._mode
-
-    def get_resolution(self):
-        return self._resolution
+    def change(self, option: Option, new_value):
+        self._options[option] = new_value

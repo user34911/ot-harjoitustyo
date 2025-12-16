@@ -1,13 +1,13 @@
 import pygame
 from renderer import Renderer
 from options import Options
-from enums import State
+from enums import State, Option
 from game import Game
 from menu import Menu
 
 def main():
     options = Options()
-    display = pygame.display.set_mode(options.get_resolution())
+    display = pygame.display.set_mode(options.get(Option.RESOLUTION))
     pygame.display.set_caption("2048")
     pygame.font.init()
 
@@ -15,7 +15,7 @@ def main():
 
     pygame.init()
     while True:
-        state = options.get_state()
+        state = options.get(Option.STATE)
         if state is State.MENU:
             Menu(options, renderer).start()
 

@@ -3,8 +3,8 @@ from pygame_gui import UIManager
 from ui.main_menu import MainMenu
 from ui.leaderboard import Leaderboards
 from ui.start_options import StartOptions
-from options import Option, Options
-from enums import MenuScreen
+from options import Options
+from enums import MenuScreen, Option
 from menu_loop import MenuLoop
 
 class Menu:
@@ -31,6 +31,6 @@ class Menu:
         self._loop = MenuLoop(screens, self._manager, self.renderer, self.options)
 
     def _set_menu_background(self):
-        background = pygame.Surface(self.options.get_resolution())
+        background = pygame.Surface(self.options.get(Option.RESOLUTION))
         background.fill((214, 189, 159))
         self.renderer.set_menu_background(background)
