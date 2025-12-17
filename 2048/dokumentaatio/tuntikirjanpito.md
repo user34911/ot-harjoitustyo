@@ -26,4 +26,5 @@
 | 11.12 | 1 | Refaktorointo |
 | 12.12 | 3 | Tulostaulukko ajastetulle pelimuodolle |
 | 16.12 | 2 | Muokautettava ruudukon koko |
-| yht | 43 | |
+| 17.12 | 1 | Ruudukko mukautuu näytön kokoon |
+| yht | 44 | |
