@@ -1,37 +1,23 @@
 from enums import State, Option, Mode
+from repository.config_repository import get_resolution, get_user
 
 class Options:
     def __init__(self):
-        self._resolution = (600, 600)
-        self._grid_size = 4
-        self._cell_size = 100
-        self._position = (100, 100)
-        self._mode = Mode.STANDARD
+        resolution = get_resolution()
+        user = get_user()
+        grid_size = 4
+        position = (100, 100)
+        mode = Mode.STANDARD
+        theme_path = r"src\ui\theme.json"
+        state = State.MENU
 
-        self._theme_path = r"src\ui\theme.json"
-
-        self._state = State.MENU
-
-        self._options = {Option.RESOLUTION: self._resolution,
-                         Option.GRID_SIZE: self._grid_size,
-                         Option.CELL_SIZE: self._cell_size,
-                         Option.POSITION: self._position,
-                         Option.MODE: self._mode,
-                         Option.THEME_PATH: self._theme_path,
-                         Option.STATE: self._state}
-
-    def get_game_options(self):
-        options = {Option.RESOLUTION: self._resolution,
-                   Option.GRID_SIZE: self._grid_size,
-                   Option.CELL_SIZE: self._cell_size,
-                   Option.POSITION: self._position,
-                   Option.MODE: self._mode}
-        return options
-
-    def get_menu_options(self):
-        options = {Option.RESOLUTION: self._resolution,
-                   Option.THEME_PATH: self._theme_path}
-        return options
+        self._options = {Option.RESOLUTION: resolution,
+                         Option.GRID_SIZE: grid_size,
+                         Option.POSITION: position,
+                         Option.MODE: mode,
+                         Option.THEME_PATH: theme_path,
+                         Option.STATE: state,
+                         Option.USER: user}
 
     def get(self, option: Option):
         return self._options[option]

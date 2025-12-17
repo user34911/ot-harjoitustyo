@@ -19,11 +19,12 @@ class Menu:
         self._loop.start()
 
     def _initialise_menu(self):
-        opt = self.options.get_menu_options()
-        self._manager = UIManager(opt[Option.RESOLUTION], opt[Option.THEME_PATH])
-        main_menu = MainMenu(opt[Option.RESOLUTION])
-        leaderboards = Leaderboards(opt[Option.RESOLUTION])
-        start_options = StartOptions(opt[Option.RESOLUTION])
+        resolution = self.options.get(Option.RESOLUTION)
+        theme_path = self.options.get(Option.THEME_PATH)
+        self._manager = UIManager(resolution, theme_path)
+        main_menu = MainMenu(resolution)
+        leaderboards = Leaderboards(resolution)
+        start_options = StartOptions(resolution)
         screens = {MenuScreen.MAIN_MENU: main_menu,
                    MenuScreen.LEADERBOARDS: leaderboards,
                    MenuScreen.START_OPTIONS: start_options}

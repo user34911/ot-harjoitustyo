@@ -57,7 +57,7 @@ class GameLoop:
             self._clock.tick(60)
 
     def _submit_to_leaderboards(self, mode):
-        player = "guest"
+        player = self._options.get(Option.USER)
         if mode is Mode.STANDARD:
             add_to_leaderboard([player, self._grid.score.get_score()], Mode.STANDARD)
         else:

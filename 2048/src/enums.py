@@ -13,6 +13,7 @@ class Option(Enum):
     MODE = 5
     THEME_PATH = 6
     STATE = 7
+    USER = 8
 
 class State(Enum):
     MENU = 1
