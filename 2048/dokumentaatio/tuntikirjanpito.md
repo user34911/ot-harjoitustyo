@@ -27,4 +27,5 @@
 | 12.12 | 3 | Tulostaulukko ajastetulle pelimuodolle |
 | 16.12 | 2 | Muokautettava ruudukon koko |
 | 17.12 | 1 | Ruudukko mukautuu näytön kokoon |
-| yht | 44 | |
+| 20.12 | 2 | Käyttäjänimen vaihto / asettaminen |
+| yht | 46 | |
