@@ -3,6 +3,7 @@ from pygame_gui import UIManager
 from ui.main_menu import MainMenu
 from ui.leaderboard import Leaderboards
 from ui.start_options import StartOptions
+from ui.username import Username
 from options import Options
 from enums import MenuScreen, Option
 from menu_loop import MenuLoop
@@ -25,9 +26,11 @@ class Menu:
         main_menu = MainMenu(resolution)
         leaderboards = Leaderboards(resolution)
         start_options = StartOptions(resolution)
+        username = Username(resolution)
         screens = {MenuScreen.MAIN_MENU: main_menu,
                    MenuScreen.LEADERBOARDS: leaderboards,
-                   MenuScreen.START_OPTIONS: start_options}
+                   MenuScreen.START_OPTIONS: start_options,
+                   MenuScreen.USERNAME: username}
         self._set_menu_background()
         self._loop = MenuLoop(screens, self._manager, self.renderer, self.options)
 

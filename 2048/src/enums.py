@@ -4,6 +4,7 @@ class MenuScreen(Enum):
     MAIN_MENU = 1
     START_OPTIONS = 2
     LEADERBOARDS = 3
+    USERNAME = 4
 
 class Option(Enum):
     RESOLUTION = 1

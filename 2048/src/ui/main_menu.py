@@ -1,6 +1,5 @@
 import pygame
 from pygame_gui.elements import UIButton
-from repository.config_repository import get_user
 
 class MainMenu:
     def __init__(self, window_size):
@@ -10,7 +9,6 @@ class MainMenu:
         self.exit_button = None
         self.leaderboard_button = None
         self.username_button = None
-        self._username = get_user()
     
     def recreate(self, manager):
         button_width = 300
@@ -41,6 +39,6 @@ class MainMenu:
         self.username_button = UIButton(pygame.Rect((int(self.window_size[0] // 2) - button_width // 2,
                                                  int(self.window_size[1]) - button_height),
                                                 (button_width, button_height),),
-                                    f"Player: {self._username}",
+                                    "Change Username",
                                     manager,
                                     object_id='#username_button')

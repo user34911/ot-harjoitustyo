@@ -3,6 +3,7 @@ import pygame_gui
 from pygame_gui import UIManager
 from enums import State, Mode, MenuScreen, Option
 from options import Options
+from repository.config_repository import set_user
 
 class MenuLoop:
     def __init__(self, screens: dict, manager: UIManager, renderer, options: Options):
@@ -16,6 +17,7 @@ class MenuLoop:
         self._screens[MenuScreen.MAIN_MENU].recreate(self._manager)
         self._screens[MenuScreen.START_OPTIONS].recreate(self._manager)
         self._screens[MenuScreen.LEADERBOARDS].recreate(self._manager)
+        self._screens[MenuScreen.USERNAME].recreate(self._manager)
 
         while True:
             if self._handle_events() is not True:
@@ -36,6 +38,7 @@ class MenuLoop:
                 if event.key == pygame.K_ESCAPE:
                     self._screens[MenuScreen.START_OPTIONS].container.hide()
                     self._screens[MenuScreen.LEADERBOARDS].container.hide()
+                    self._screens[MenuScreen.USERNAME].container.hide()
 
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
                 if self._screens[MenuScreen.LEADERBOARDS].container.visible:
@@ -45,6 +48,9 @@ class MenuLoop:
                 else:
                     state = self._handle_main_menu_event(event)
                 return state if state is not True else True
+
+            if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED:
+                self._handle_username_event(event)
 
         return True
 
@@ -86,7 +92,17 @@ class MenuLoop:
         if event.ui_element == self._screens[MenuScreen.MAIN_MENU].start_button:
             self._screens[MenuScreen.START_OPTIONS].container.show()
 
+        if event.ui_element == self._screens[MenuScreen.MAIN_MENU].username_button:
+            self._screens[MenuScreen.USERNAME].container.show()
+
         return True
+
+    def _handle_username_event(self, event):
+        if event.ui_element == self._screens[MenuScreen.USERNAME].input_box:
+            new_username = event.text
+            set_user(new_username)
+            self._options.change(Option.USER, new_username)
+            self._screens[MenuScreen.USERNAME].container.hide()
 
     def _render(self):
         self._renderer.render_menu(self._manager)
