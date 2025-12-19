@@ -1,10 +1,17 @@
 import pygame
 
-TILE_COLOURS = {2: pygame.Color(255, 233, 196),
-                4: pygame.Color(255, 220, 161),
-                8: pygame.Color(250, 199, 112),
-                16: pygame.Color(255, 161, 0),
-                32: pygame.Color(207, 132, 58)}
+TILE_COLOURS = {2: pygame.Color(236, 228, 219),
+                4: pygame.Color(235, 227, 207),
+                8: pygame.Color(233, 179, 131),
+                16: pygame.Color(233, 155, 115),
+                32: pygame.Color(231, 132, 111),
+                64: pygame.Color(230, 109, 84),
+                128: pygame.Color(234, 214, 153),
+                256: pygame.Color(233, 213, 142),
+                512: pygame.Color(240, 213, 113),
+                1024: pygame.Color(232, 207, 122),
+                2048: pygame.Color(229, 198, 67),
+                "other": pygame.Color(59, 57, 51)}
 
 class Tile(pygame.sprite.Sprite):
     """Class that handles the tiles"""
@@ -37,10 +44,11 @@ class Tile(pygame.sprite.Sprite):
         try:
             colour = TILE_COLOURS[self.value]
         except KeyError:
-            colour = pygame.Color(137, 96, 204)
+            colour = TILE_COLOURS["other"]
         self.image.fill(colour)
 
-        text = self.font.render(str(self.value), True, (0, 0, 0))
+        text_colour = self._get_text_color(self.value)
+        text = self.font.render(str(self.value), True, text_colour)
         text_rect = text.get_rect()
         text_rect.center = (self.rect.width//2, self.rect.height//2)
         self.image.blit(text, text_rect)
@@ -58,3 +66,8 @@ class Tile(pygame.sprite.Sprite):
         font = pygame.font.SysFont("Arial", size // 3)
         font.bold = True
         return font
+
+    def _get_text_color(self, value):
+        if value < 8:
+            return pygame.Color(0, 0, 0)
+        return pygame.Color(255, 255, 255)
