@@ -1,6 +1,6 @@
 # Arkkitehtuurikuvaus
 ## Rakenne
-Ohjelman koodi on jaettu hakemistoihin, missä _sprites_ hakemistossa on _Sprite_ oliot, _ui_ hakemistossa käyttöliittymään liittyvä koodi, _leaderboard_ hakemistossa tulostaulukko, ja sen kanssa interaktivoivat funktiot ja muu koodi on päähakemistossa.
+Ohjelman koodi on jaettu hakemistoihin, missä _sprites_ hakemistossa on _Sprite_ oliot, _ui_ hakemistossa käyttöliittymään eri näkymein koodi, _leaderboard_ hakemistossa tulostaulukko, _repository_ hakemistossa tiedostojen tallennuksen ja lukemiseen liittyvä koodi. Muu koodi on päähakemistossa.
 
 ## Käyttöliittymä
 Käyttöliittymä sisältää kaksi päänäkymää ja usean alinäkymän:
@@ -18,30 +18,47 @@ Käyttöliittymä sisältää kaksi päänäkymää ja usean alinäkymän:
 Kummatkin päänäkymistä ovat oma luokkansa ja vastaavasti alinäkymät sisältyvät päänäkymän luokkaan. Molemmilla näkymillä on oma silmukkansa joiden välillä pääsilmukka vaihtelee vaihdellen näkymää.
 
 ## Sovelluslogiikka
-Sovellus rakentuu pääsilmukasta, joka hallinoi suoritetaanko peli-, vai päävalikkosilmukkaa
+Sovellus rakentuu pääsilmukasta, joka hallinoi suoritetaanko peli-, vai päävalikkoluokkaa. Luokat _Game_ ja _Menu_ sisältävät vastaavasti pelin ja päävalikon luokat, kuten silmukat. _Game_ luokan alaisuudessa on esimerkiksi _Grid_ luokkaa, joka vastaa pelin suorituksesta. _Menu_ luokan alaisuudessa on taas eri päävälikkonäkymien luokat. Luokat saavat kuitenkin myös yhteisiä luokkia, kuten asetuksista vastaava _Options_ tai näytön piirtämisestä vastaava _Renderer_.
 ```mermaid
 classDiagram
-    main "1" -- "1" GameLoop
-    main "1" -- "1" MenuLoop
-    MenuLoop "1" -- "1" Menu
-    MenuLoop "1" -- "1" MenuRenderer
-    Menu "1" -- "1" leaderboard
-    GameLoop "1" -- "1" Grid
-    GameLoop "1" -- "1" Clock
-    GameLoop "1" -- "1" EventQueue
-    GameLoop "1" -- "1" Renderer
-    Grid "1" -- "*" Cell
-    Grid "1" -- "*" Tile
-    Cell "1" -- "1" Tile
-    Grid "1" -- "1" Score
+    main "1" -- "1" Options
+    main "1" -- "1" Renderer
+    main "1" -- "1" Menu
+    main "1" -- "1" Game
+    Game "1" -- "1" Options
+    Game "1" -- "1" Grid
     Grid "1" -- "4" Borders
+    Grid "1" -- "n" Cell
+    Grid "1" -- "n" Tile
+    Cell "1" -- "0-1" Tile
+    Game "1" -- "1" GameLoop
+    GameLoop "1" -- "1" Grid
+    Grid "1" -- "1" Timer
+    Grid "1" -- "1" Score
+    GameLoop "1" -- "1" Options
+    GameLoop "1" -- "1" Renderer
+    GameLoop "1" -- "1" EventQueue
+    GameLoop "1" -- "1" Clock
+    Menu "1" -- "1" UIManager
+    Menu "1" -- "1" MenuLoop
+    Menu "1" -- "1" Options
+    Menu "1" -- "1" Renderer
+    MenuLoop "1" -- "1" MainMenu
+    MenuLoop "1" -- "1" Leaderboard
+    MenuLoop "1" -- "1" StartOptions
+    MenuLoop "1" -- "1" Username
+    MenuLoop "1" -- "1" UIManager
+    MenuLoop "1" -- "1" Options
+    MenuLoop "1" -- "1" Renderer
+    MenuLoop "1" -- "1" Clock
+    MenuLoop "1" -- "1" EventQueue
   ```
 
 ## Tietojen pysyväistallennus
-Sovellus tallentaa tulostaulukon pysyvästi paikallisesti CSV-tiedostoon. Tietojen tallentamisesta vastaa `leaderboard.py` tiedoston funktio `add_score_to_lb` ja noutamisesta `get_leaderboard`.
+Sovellus tallentaa tulostaulukon pysyvästi paikallisesti CSV-tiedostoon. Tietojen tallentamisesta vastaa `leaderboard_repository.py` tiedoston funktio `add_score_to_lb` ja noutamisesta `get_leaderboard`. Lisäksi sovelluksella on myös määrittelytiedosto `config.ini`, johon tallennetaan käyttäjänimi, sekä näytön resoluutio.
 
 ### Tiedostot
-Sovellus tallentaa pelien tulokset tiedostoon `leaderboard.csv`.
+Sovellus tallentaa normaalin pelimuodon tulokset tiedostoon `standard_leaderboard.csv`.
 Tiedostossa tulokset ovat muodossa
 ```
 guest,2303
@@ -50,6 +67,24 @@ jare,9572
 ```
 Eli `{käyttäjänimi},{tulos}`
 
+Ajastetun pelimuodon tulokset tallenetaan tiedostoon `timed_leaderboard.csv`.
+Tiedostossa tulokset ovat muodossa
+```
+guest,02:23
+matias,10:33
+seve,00:02
+```
+Eli `{käyttäjänimi},{aika}`
+
+Määrittelytiedosto `config.ini` sisältää seuraavat tiedot
+```
+[DEFAULT]
+width = {ikkunan leveys}
+height = {ikkunan korkeus}
+
+[USER]
+user = {käyttäjänimi}
+```
 
 ## Päätoiminnallisuudet
 ### Laattojen liikuttaminen
