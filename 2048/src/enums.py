@@ -9,8 +9,6 @@ class MenuScreen(Enum):
 class Option(Enum):
     RESOLUTION = 1
     GRID_SIZE = 2
-    CELL_SIZE = 3
-    POSITION = 4
     MODE = 5
     THEME_PATH = 6
     STATE = 7
