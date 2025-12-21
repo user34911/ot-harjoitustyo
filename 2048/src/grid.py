@@ -222,12 +222,14 @@ class Grid:
         Returns:
             Status: returns game over status if game is over None otherwise
         """
+        if self._mode is Mode.TIMED and self._tile_on_grid(2048):
+            self.timer.stop()
+            return Game.WON
+
         if self._any_empty_cells() or self._any_movable_tiles():
             return Game.ONGOING
 
         self.timer.stop()
-        if self._mode is Mode.TIMED and self._tile_on_grid(256):
-            return Game.WON
         return Game.LOST
 
     def get_game_mode(self):
