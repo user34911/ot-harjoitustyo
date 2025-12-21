@@ -14,8 +14,10 @@ def get_resolution():
     config = configparser.ConfigParser()
     config.read(FILEPATH)
     width = config["DEFAULT"]["width"]
+    width = max(int(width), 600)
     height = config["DEFAULT"]["height"]
-    return (int(width), int(height))
+    height = max(int(height), 600)
+    return (width, height)
 
 def get_user():
     config = configparser.ConfigParser()
