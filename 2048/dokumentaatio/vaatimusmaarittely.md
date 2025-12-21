@@ -12,13 +12,13 @@ Sovellus on 2048 peli.
 - Peli pitää kirjaa pisteistä :heavy_check_mark:
   - Pisteet lasketaan kaavalla laatta $2^n$ antaa $(n-1)2^n$ lisää pisteitä :heavy_check_mark:
 - Pelissä on tulostaulukko :heavy_check_mark:
-  - Käyttäjä voi asettaa kirjautumatta nimimerkin, jolla tuloksia tallenetaan
+  - Käyttäjä voi asettaa kirjautumatta nimimerkin, jolla tuloksia tallenetaan :heavy_check_mark:
   - Käyttäjä voi nähdä tulostaulukon käyttöliittymästä :heavy_check_mark:
   - Peli tallentaa tuloksen tulostaulukkoon automaattisesti :heavy_check_mark:
 
 ## Jatkokehitys (jos aikaa niin)
 - Ajastettu pelimuoto, jossa tavoite saadaa 2048 mahdollisimman nopeasti :heavy_check_mark:
-- Itse valittava ruudukon koko
-- "Undo" toiminallisuus, joka kumoaa edellisen siirron
-- "Katkaisuhoito" toiminallisuus, joka poistaa ruudukosta pienet laata
-- Laajennettu tulostaulukko sisältämään ajastetun pelimuodon
+- Itse valittava ruudukon koko :heavy_check_mark:
+- "Undo" toiminallisuus, joka kumoaa edellisen siirron :x:
+- "Katkaisuhoito" toiminallisuus, joka poistaa ruudukosta pienet laata :x:
+- Laajennettu tulostaulukko sisältämään ajastetun pelimuodon :heavy_check_mark:
