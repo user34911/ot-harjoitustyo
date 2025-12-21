@@ -8,9 +8,10 @@ _Koko_ perheelle sopiva hassun hauska **2048** peli
 - [changelog](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/changelog.md)
 - [arkkitehtuuri](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/arkkitehtuuri.md)
 - [käyttöohje](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/kayttoohje.md)
+- [testaus](https://github.com/user34911/ot-harjoitustyo/blob/main/2048/dokumentaatio/testaus.md)
 
 ## Release
-[viikko 5 release](https://github.com/user34911/ot-harjoitustyo/releases/tag/viikko5)
+[loppupalautus](https://github.com/user34911/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ## Asennus
 1. Siirry enshin hakemistoon 2048
@@ -35,4 +36,8 @@ $ poetry run invoke test
 Testikattavuusraportti löytyy htmlcow -hakemistosta
 ```
 $ poetry run invoke coverage-report
+```
+### Pylint
+```
+$ poetry run invoke lint
 ```
