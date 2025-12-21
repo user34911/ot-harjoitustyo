@@ -9,7 +9,7 @@ class Options:
         user = get_user()
         grid_size = 4
         mode = Mode.STANDARD
-        theme_path = r"src\ui\theme.json"
+        theme_path = r"src/ui/theme.json"
         state = State.MENU
 
         self._options = {Option.RESOLUTION: resolution,
