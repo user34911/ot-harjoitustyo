@@ -31,4 +31,5 @@
 | 21.12 | 3 | Dokumentaatio | 
 | | 1 | Testien kirjoittamista |
 | | 1 | Docstring kommentointi |
-| yht | 51 | |
+| | 1 | Viimeistely ja lopullinen release |
+| yht | 52 | |
