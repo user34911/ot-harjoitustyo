@@ -28,5 +28,7 @@
 | 16.12 | 2 | Muokautettava ruudukon koko |
 | 17.12 | 1 | Ruudukko mukautuu näytön kokoon |
 | 20.12 | 2 | Käyttäjänimen vaihto / asettaminen |
-| 21.12 | 4 | Testaus ja dokumentaatio | 
-| yht | 50 | |
+| 21.12 | 3 | Dokumentaatio | 
+| | 1 | Testien kirjoittamista |
+| | 1 | Docstring kommentointi |
+| yht | 51 | |
