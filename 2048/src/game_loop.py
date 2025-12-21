@@ -1,6 +1,6 @@
 import pygame
 from enums import State, Direction, Mode, Game, Option
-from leaderboard.leaderboard_repository import add_to_leaderboard
+from repository.leaderboard_repository import add_to_leaderboard
 from options import Options
 from grid import Grid
 
@@ -62,20 +62,6 @@ class GameLoop:
             add_to_leaderboard([player, self._grid.score.get_score()], Mode.STANDARD)
         else:
             add_to_leaderboard([player, self._grid.timer.get_time()], Mode.TIMED)
-
-    def game_over(self):
-        """Stops the game from being played showing the user the final alignmnet
-            of tiles and their score / time
-
-        Returns:
-            Status: which state the game should go to next
-        """
-        self._renderer.render_game_over()
-        while True:
-            status = self._handle_events()
-            if status is not True:
-                return
-            self._clock.tick(60)
 
     def _handle_events(self):
         """Checks user inputs and makes game perform actions accordingly

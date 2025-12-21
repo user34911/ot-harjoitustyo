@@ -1,6 +1,6 @@
 import pygame
 from pygame_gui.elements import UIScrollingContainer, UILabel, UIPanel, UIButton
-from leaderboard.leaderboard_repository import get_leaderboard
+from repository.leaderboard_repository import get_leaderboard
 from enums import Mode
 
 class Leaderboards:
