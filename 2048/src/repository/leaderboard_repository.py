@@ -1,5 +1,6 @@
 import csv
 import os
+from pathlib import Path
 from datetime import datetime
 from enums import Mode
 
@@ -11,6 +12,9 @@ def add_to_leaderboard(fields, mode: Mode):
         mode (Mode): which mode leaderboards to write to
     """
     filepath = _get_filepath(mode)
+    path = Path(filepath)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
     with open(filepath, "a", newline="", encoding="utf-8") as file:
         csv.writer(file).writerow(fields)
 
