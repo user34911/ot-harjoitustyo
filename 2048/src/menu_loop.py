@@ -73,8 +73,8 @@ class MenuLoop:
             else:
                 self._options.change(Option.MODE, Mode.STANDARD)
 
-            grid_size = self._screens[MenuScreen.START_OPTIONS].grid_size_dropdown.selected_option[0]
-            grid_size = int(self._parse_option_string(grid_size)[0])
+            grid_size = self._screens[MenuScreen.START_OPTIONS].grid_size_dropdown.selected_option
+            grid_size = int(self._parse_option_string(grid_size[0])[0])
             self._options.change(Option.GRID_SIZE, grid_size)
 
             return self._options.change(Option.STATE, State.GAME)

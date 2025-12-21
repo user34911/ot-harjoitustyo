@@ -7,7 +7,7 @@ def set_resolution(resolution):
     config.read(FILEPATH)
     config["DEFAULT"] = {"width": resolution[0],
                                 "height": resolution[1]}
-    with open(FILEPATH, "w") as configfile:
+    with open(FILEPATH, "w", encoding="utf-8") as configfile:
         config.write(configfile)
 
 def get_resolution():
@@ -28,5 +28,5 @@ def set_user(username):
     config = configparser.ConfigParser()
     config.read(FILEPATH)
     config["USER"] = {"user": str(username)}
-    with open(FILEPATH, "w") as configfile:
+    with open(FILEPATH, "w", encoding="utf-8") as configfile:
         config.write(configfile)
