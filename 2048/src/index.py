@@ -6,6 +6,7 @@ from game import Game
 from menu import Menu
 
 def main():
+    """main loop"""
     options = Options()
     display = pygame.display.set_mode(options.get(Option.RESOLUTION))
     pygame.display.set_caption("2048")

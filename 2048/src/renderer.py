@@ -3,7 +3,13 @@ from enums import Object
 from grid import Grid
 
 class Renderer:
+    """class that handles rendering that is not done by pygame_gui"""
     def __init__(self, display):
+        """init renderer
+
+        Args:
+            display (pygame.display): the display renderer renders on
+        """
         self._display = display
         self._grid = None
         self._menu_background = None
@@ -13,12 +19,23 @@ class Renderer:
         self._font.bold = True
 
     def set_grid(self, grid: Grid):
+        """set grid to render
+
+        Args:
+            grid (Grid):
+        """
         self._grid = grid
 
     def set_menu_background(self, background):
+        """set background of menu
+
+        Args:
+            background (pygame.Surface): menu background
+        """
         self._menu_background = background
 
     def render_grid(self):
+        """renders playing grid correctly layered"""
         self._display.fill((214, 189, 159))
         self._grid.objects[Object.TILE].draw(self._display)
         self._grid.objects[Object.CELL].draw(self._display)
@@ -29,6 +46,7 @@ class Renderer:
         pygame.display.update()
 
     def _render_timer(self):
+        """renders timer"""
         text = self._font.render(str(self._grid.timer.get_time()), True, (255, 255, 255))
         text_rect = text.get_rect()
         text_rect.x = self._grid.x
@@ -36,6 +54,7 @@ class Renderer:
         self._display.blit(text, text_rect)
 
     def _render_score(self):
+        """renders score"""
         text = self._font.render(self._grid.score.get_score(), True, (255, 255, 255))
         text_rect = text.get_rect()
         text_rect.x = self._grid.x
@@ -43,6 +62,7 @@ class Renderer:
         self._display.blit(text, text_rect)
 
     def render_game_over(self):
+        """renders game over text"""
         font = pygame.font.SysFont("Arial", 100)
         text = font.render("GAME OVER", True, (255, 255, 255))
         text_rect = text.get_rect()
@@ -52,6 +72,7 @@ class Renderer:
         pygame.display.update()
 
     def render_menu(self, manager):
+        """renders menu"""
         self._display.blit(self._menu_background, (0, 0))
         manager.draw_ui(self._display)
 

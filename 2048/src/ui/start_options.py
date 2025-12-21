@@ -3,7 +3,13 @@ from pygame_gui.elements import UIButton, UILabel, UIPanel
 from pygame_gui.elements import UICheckBox, UIDropDownMenu
 
 class StartOptions:
+    """start option window"""
     def __init__(self, window_size):
+        """init
+
+        Args:
+            window_size (Tuple): size of the window
+        """
         self._window_size = window_size
 
         self.container = None
@@ -13,6 +19,11 @@ class StartOptions:
         self.grid_size_dropdown = None
 
     def recreate(self, manager):
+        """create the window
+
+        Args:
+            manager (UIManager): pygame_gui asset that controls pygame_gui elements
+        """
         self.container = UIPanel(pygame.Rect(50, 50, self._window_size[0] - 100, self._window_size[1] - 100),
                                                manager=manager,
                                                visible=True)

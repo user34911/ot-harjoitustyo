@@ -10,14 +10,13 @@ from enums import Direction, Object, Mode, Game
 class Grid:
     """class that handles the playing grid"""
     def __init__(self, grid_size: int, cell_size: int, position: tuple, mode = Mode.STANDARD):
-        """Constructor that generates the grid and starts the game
+        """create the grid
 
         Args:
-            grid_size (int): what size is the grid ex. 4 = 4 x 4
-            cell_size (int): size of a single cell in pixels
-            position (tuple): top left position of the top left cell, 
-                                borders are drawn left and above of this value
-            timed (bool, optional): is the game timed or not. Defaults to False.
+            grid_size (int): what size is the grid ex. 4
+            cell_size (int): cell size in pixels ex. 100
+            position (tuple): postion of the grid in pixels ex. (100, 100)
+            mode (Mode, optional): gamemode of the grid. Defaults to Mode.STANDARD.
         """
         self.cell_size = cell_size
         self.grid_size = grid_size
@@ -94,6 +93,7 @@ class Grid:
         self._unlock_all_tiles()
 
     def _move_tile(self, tile, direction, amount: int):
+        """handles actual moving of tile"""
         if direction is Direction.DOWN:
             tile.rect.move_ip(0, amount)
         if direction is Direction.UP:
@@ -217,10 +217,10 @@ class Grid:
             tile.lock = False
 
     def get_game_state(self):
-        """get state if game is still going or over
+        """get current game state
 
         Returns:
-            Status: returns game over status if game is over None otherwise
+            Game: what is the status of game currently ex. Game.ONGOING
         """
         if self._mode is Mode.TIMED and self._tile_on_grid(2048):
             self.timer.stop()
@@ -233,6 +233,7 @@ class Grid:
         return Game.LOST
 
     def get_game_mode(self):
+        """get current game mode"""
         return self._mode
 
     def _tile_on_grid(self, value):
@@ -250,6 +251,7 @@ class Grid:
         return False
 
     def _any_movable_tiles(self):
+        """check if any tile on the grid is movable, used to check if game is over"""
         directions = [Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT]
         for direction in directions:
             if len(self._get_movable_tiles(direction)) != 0:
@@ -257,6 +259,7 @@ class Grid:
         return False
 
     def _any_empty_cells(self):
+        """check if any cell on the grid is empty"""
         empty_cells = [cell for cell in self.objects[Object.CELL].sprites() if not cell.tile]
         if len(empty_cells) == 0:
             return False

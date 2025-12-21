@@ -7,13 +7,14 @@ from grid import Grid
 class GameLoop:
     """Class that handles the game loop"""
     def __init__(self, grid: Grid, renderer, options: Options, event_queue, clock):
-        """Constructor
+        """init GameLoop
 
         Args:
-            grid (Grid): the grid object that handles game logic
-            renderer (Renderer): responsible for drawing the game on screen
-            event_queue (EventQueue): module that checks user inputs
-            clock (Clock): module to update screen in set intervals
+            grid (Grid): Grid game is played on
+            renderer (Renderer): renders the game
+            options (Options): options to enable change
+            event_queue
+            clock
         """
         self._grid = grid
         self._clock = clock
@@ -22,11 +23,7 @@ class GameLoop:
         self._options = options
 
     def start(self):
-        """Function to start the game loop
-
-        Returns:
-            Status: which state the game should go to next
-        """
+        """Function to start the game loop"""
         self._grid.timer.start()
         while True:
             if self._handle_events() is not True:
@@ -41,6 +38,15 @@ class GameLoop:
                 return self._game_over(game_state)
 
     def _game_over(self, final_state):
+        """called when game is over, submits score to leaderboard
+        if eligible and starts the game over loop
+
+        Args:
+            final_state (Game): was the game won or lost
+
+        Returns:
+            starts game over loop
+        """
         mode = self._grid.get_game_mode()
         if final_state is Game.WON and mode is Mode.TIMED and self._grid.grid_size == 4:
             self._submit_to_leaderboards(mode)
@@ -51,12 +57,14 @@ class GameLoop:
         return self._game_over_loop()
 
     def _game_over_loop(self):
+        """keeps game over text on screen"""
         while True:
             if self._handle_events() is not True:
                 return
             self._clock.tick(60)
 
     def _submit_to_leaderboards(self, mode):
+        """fetches username and adds score to right leaderboard"""
         player = self._options.get(Option.USER)
         if mode is Mode.STANDARD:
             add_to_leaderboard([player, self._grid.score.get_score()], Mode.STANDARD)
@@ -67,7 +75,7 @@ class GameLoop:
         """Checks user inputs and makes game perform actions accordingly
 
         Returns:
-            Status: which status should the game go to next or None if game continues
+            bool: should loop continue
         """
         for event in self._event_queue.get():
             if event.type == pygame.KEYDOWN:
@@ -88,4 +96,5 @@ class GameLoop:
         return True
 
     def _render(self):
+        """renders the grid"""
         self._renderer.render_grid()

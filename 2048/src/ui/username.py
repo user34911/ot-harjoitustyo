@@ -3,12 +3,23 @@ from pygame_gui.elements import UITextEntryLine, UIPanel, UILabel
 from repository.config_repository import get_user
 
 class Username:
+    """change username window"""
     def __init__(self, window_size):
+        """init
+
+        Args:
+            window_size (Tuple): size of the window
+        """
         self.window_size = window_size
         self.container = None
         self.input_box = None
 
     def recreate(self, manager):
+        """create the username window
+
+        Args:
+            manager (UIManager): pygame_gui asset that controls pygame_gui elements
+        """
         self.container = UIPanel(pygame.Rect(0, 0, self.window_size[0], self.window_size[1]),
                                  manager=manager,
                                  visible=True,

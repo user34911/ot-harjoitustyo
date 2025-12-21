@@ -2,7 +2,13 @@ import pygame
 from pygame_gui.elements import UIButton
 
 class MainMenu:
+    """main menu window"""
     def __init__(self, window_size):
+        """init
+
+        Args:
+            window_size (Tuple): size of the window
+        """
         self.window_size = window_size
 
         self.start_button = None
@@ -11,6 +17,11 @@ class MainMenu:
         self.username_button = None
     
     def recreate(self, manager):
+        """create the window
+
+        Args:
+            manager (UIManager): pygame_gui asset that controls pygame_gui elements
+        """
         button_width = 300
         button_height = 100
 

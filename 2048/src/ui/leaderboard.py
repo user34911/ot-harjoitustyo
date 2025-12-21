@@ -4,7 +4,13 @@ from repository.leaderboard_repository import get_leaderboard
 from enums import Mode
 
 class Leaderboards:
+    """leaderboard window"""
     def __init__(self, window_size):
+        """init
+
+        Args:
+            window_size (Tuple): size of the window
+        """
         self._window_size = window_size
 
         self.container = None
@@ -14,6 +20,11 @@ class Leaderboards:
         self.timed_button = None
 
     def recreate(self, manager):
+        """create the window
+
+        Args:
+            manager (UIManager): pygame_gui asset that controls pygame_gui elements
+        """
         self.container = UIPanel(pygame.Rect(50, 50, self._window_size[0] - 100, self._window_size[1] - 100),
                                  manager=manager,
                                  visible=True)
@@ -58,6 +69,13 @@ class Leaderboards:
         self.container.hide()
 
     def _recreate_leaderboard(self, manager, container, content):
+        """creates the actual leaderboard entries
+
+        Args:
+            manager (UIManager)
+            container: container entries go inside
+            content (list): leaderboard entries
+        """
         entry_width = 100
         entry_height = 40
 

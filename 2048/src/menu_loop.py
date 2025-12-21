@@ -6,7 +6,16 @@ from options import Options
 from repository.config_repository import set_user
 
 class MenuLoop:
+    """loop that handles menu events"""
     def __init__(self, screens: dict, manager: UIManager, renderer, options: Options):
+        """initialise loop
+
+        Args:
+            screens (dict): dict containing all the menu screens
+            manager (UIManager): pygame_gui asset handling pygame_gui elements
+            renderer (Renderer): renders menu
+            options (Options): options off app to enable changing them
+        """
         self._screens = screens
         self._manager = manager
         self._renderer = renderer
@@ -14,6 +23,7 @@ class MenuLoop:
         self._clock = pygame.time.Clock()
 
     def start(self):
+        """start and run the loop"""
         self._screens[MenuScreen.MAIN_MENU].recreate(self._manager)
         self._screens[MenuScreen.START_OPTIONS].recreate(self._manager)
         self._screens[MenuScreen.LEADERBOARDS].recreate(self._manager)
@@ -28,6 +38,11 @@ class MenuLoop:
             self._render()
 
     def _handle_events(self):
+        """get event and check its type before delegating handling to subfunction
+
+        Returns:
+            bool: should loop continue running
+        """
         for event in pygame.event.get():
             self._manager.process_events(event)
 
@@ -55,6 +70,14 @@ class MenuLoop:
         return True
 
     def _handle_leaderboards_event(self, event):
+        """handles an event occuring in leaderboard window
+
+        Args:
+            event
+
+        Returns:
+            bool: should loop continue running
+        """
         if event.ui_element == self._screens[MenuScreen.LEADERBOARDS].standard_button:
             self._screens[MenuScreen.LEADERBOARDS].show_standard_leaderboards()
 
@@ -64,6 +87,14 @@ class MenuLoop:
         return True
 
     def _handle_start_option_event(self, event):
+        """handles an event occuring in start option window
+
+        Args:
+            event
+
+        Returns:
+            bool: should loop continue running
+        """
         if event.ui_element == self._screens[MenuScreen.START_OPTIONS].back_button:
             self._screens[MenuScreen.START_OPTIONS].container.hide()
 
@@ -82,6 +113,14 @@ class MenuLoop:
         return True
 
     def _handle_main_menu_event(self, event):
+        """handles an event occuring in main menu
+
+        Args:
+            event
+
+        Returns:
+            bool: should loop continue running
+        """
         if event.ui_element == self._screens[MenuScreen.MAIN_MENU].exit_button:
             return self._options.change(Option.STATE, State.EXIT)
 
@@ -98,6 +137,14 @@ class MenuLoop:
         return True
 
     def _handle_username_event(self, event):
+        """handles an event occuring in username window
+
+        Args:
+            event
+
+        Returns:
+            bool: should loop continue running
+        """
         if event.ui_element == self._screens[MenuScreen.USERNAME].input_box:
             new_username = event.text
             set_user(new_username)
@@ -105,8 +152,17 @@ class MenuLoop:
             self._screens[MenuScreen.USERNAME].container.hide()
 
     def _render(self):
+        """call renderer to render manu"""
         self._renderer.render_menu(self._manager)
 
     def _parse_option_string(self, string: str):
+        """parse the string from grid size dropdown
+
+        Args:
+            string (str): grid size ex. "4x4"
+
+        Returns:
+            int: grid size as only a single number ex. 4
+        """
         parsed = string.split("x")
         return (parsed[0], parsed[1])
